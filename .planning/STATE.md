@@ -23,9 +23,9 @@ See: .planning/PROJECT.md (updated 2026-02-27)
 ## Current Position
 
 Phase: 1 of 4 (Tauri Foundation)
-Plan: 3 of 5 in current phase
+Plan: 4 of 5 in current phase
 Status: In progress
-Last activity: 2026-02-27 — Completed Plan 03 (IPC command stubs with spawn_blocking)
+Last activity: 2026-02-27 — Completed Plan 04 (RuVector core integration and multi-collection storage)
 
 Progress: [██░░░░░░░░] 10%
 
@@ -68,6 +68,9 @@ Recent decisions affecting current work:
 - [01-02]: CortexEngine intentionally left as empty placeholder — RuVector fields deferred to Plan 04 as designed
 - [Phase 01-03]: spawn_blocking wraps all IPC command bodies to establish async-safe CPU-bound pattern for Phase 2 real implementation
 - [Phase 01-03]: 20 IPC commands: 16 from CLAUDE.md + get_watched_folders, get_tags, toggle_favorite, get_activity_feed for frontend-implied operations
+- [Phase 01-04]: Path from src-tauri/ to ruvector is ../../experiments/ruvector (not ../../../) — cortex and experiments are siblings under apps/
+- [Phase 01-04]: tauri::Manager trait must be in scope for setup hook to call app.path() and app.manage()
+- [Phase 01-04]: CollectionManager creates directories itself; AlreadyExists on collection creation ignored for idempotent restarts
 
 ### Pending Todos
 
@@ -82,5 +85,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-27
-Stopped at: Completed 01-03-PLAN.md (IPC command stubs with spawn_blocking)
+Stopped at: Completed 01-04-PLAN.md (RuVector core integration and multi-collection storage)
 Resume file: None

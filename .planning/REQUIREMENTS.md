@@ -30,10 +30,10 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Vector Storage
 
-- [ ] **VSTOR-01**: RuVector core integration with HNSW indexing
-- [ ] **VSTOR-02**: Multi-collection support (separate indices per embedding dimension)
-- [ ] **VSTOR-03**: Metadata filtering (type, date range, space, tags) before vector search
-- [ ] **VSTOR-04**: Hybrid queries: structured filters + semantic similarity
+- [x] **VSTOR-01**: RuVector core integration with HNSW indexing
+- [x] **VSTOR-02**: Multi-collection support (separate indices per embedding dimension)
+- [x] **VSTOR-03**: Metadata filtering (type, date range, space, tags) before vector search
+- [x] **VSTOR-04**: Hybrid queries: structured filters + semantic similarity
 
 ### File Watching
 
@@ -138,10 +138,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | TAURI-04 | Phase 1 | Complete |
 | TAURI-05 | Phase 1 | Pending |
 | TAURI-06 | Phase 1 | Complete |
-| VSTOR-01 | Phase 1 | Pending |
-| VSTOR-02 | Phase 1 | Pending |
-| VSTOR-03 | Phase 1 | Pending |
-| VSTOR-04 | Phase 1 | Pending |
+| VSTOR-01 | Phase 1 | Complete |
+| VSTOR-02 | Phase 1 | Complete |
+| VSTOR-03 | Phase 1 | Complete |
+| VSTOR-04 | Phase 1 | Complete |
 | DPIP-01 | Phase 2 | Pending |
 | DPIP-02 | Phase 2 | Pending |
 | DPIP-03 | Phase 2 | Pending |
