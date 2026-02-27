@@ -4,6 +4,7 @@ mod state;
 mod engine;
 mod types;
 pub mod pipeline;
+pub mod watcher;
 
 use std::sync::Arc;
 use tokio::sync::Mutex;
