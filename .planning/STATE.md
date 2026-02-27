@@ -3,7 +3,7 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-02-27T17:03:00.785Z"
+last_updated: "2026-02-27T17:03:30.134Z"
 progress:
   total_phases: 2
   completed_phases: 1
@@ -82,6 +82,8 @@ Recent decisions affecting current work:
 - [Phase 02-01]: AppError::Embedding added in Plan 01 to prevent both plans 01 and 02 modifying error.rs
 - [Phase 02-02]: std::sync::Mutex for fastembed model — embed() is sync, called inside spawn_blocking; avoids async lock in sync context
 - [Phase 02-02]: Integration tests (fastembed model download) marked #[ignore] for CI; fast unit tests cover truncation and regex logic
+- [Phase 02-document-pipeline-and-file-watching]: notify_debouncer_mini::notify::RecursiveMode used (not top-level notify crate) to avoid dependency conflict
+- [Phase 02-document-pipeline-and-file-watching]: DebouncedEventKind matched with wildcard _ — enum is non-exhaustive in notify-debouncer-mini 0.4
 
 ### Pending Todos
 
@@ -96,5 +98,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-27
-Stopped at: Completed 02-01-PLAN.md (Document parser and content hasher) — Phase 2 Plan 1 complete
+Stopped at: Completed 02-04-PLAN.md (File watcher registry and worker) — Phase 2 Plan 4 complete
 Resume file: None

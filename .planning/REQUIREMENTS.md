@@ -37,10 +37,10 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### File Watching
 
-- [ ] **FWAT-01**: Watched folder monitoring via notify-rs with debounce (300ms)
-- [ ] **FWAT-02**: Polling fallback for event-dropped scenarios (notify-rs limitation)
-- [ ] **FWAT-03**: File type toggles per watched folder
-- [ ] **FWAT-04**: Exclusion patterns (node_modules, .git, hidden files)
+- [x] **FWAT-01**: Watched folder monitoring via notify-rs with debounce (300ms)
+- [x] **FWAT-02**: Polling fallback for event-dropped scenarios (notify-rs limitation)
+- [x] **FWAT-03**: File type toggles per watched folder
+- [x] **FWAT-04**: Exclusion patterns (node_modules, .git, hidden files)
 - [ ] **FWAT-05**: Background indexing as Tokio task with progress events emitted to frontend
 - [ ] **FWAT-06**: Re-index on document modification (content hash comparison)
 
@@ -151,10 +151,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | DPIP-07 | Phase 2 | Complete |
 | DPIP-08 | Phase 2 | Complete |
 | DPIP-09 | Phase 2 | Complete |
-| FWAT-01 | Phase 2 | Pending |
-| FWAT-02 | Phase 2 | Pending |
-| FWAT-03 | Phase 2 | Pending |
-| FWAT-04 | Phase 2 | Pending |
+| FWAT-01 | Phase 2 | Complete |
+| FWAT-02 | Phase 2 | Complete |
+| FWAT-03 | Phase 2 | Complete |
+| FWAT-04 | Phase 2 | Complete |
 | FWAT-05 | Phase 2 | Pending |
 | FWAT-06 | Phase 2 | Pending |
 | SRCH-01 | Phase 3 | Pending |
