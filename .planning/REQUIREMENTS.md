@@ -132,13 +132,70 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| (Populated by roadmapper) | | |
+| TAURI-01 | Phase 1 | Pending |
+| TAURI-02 | Phase 1 | Pending |
+| TAURI-03 | Phase 1 | Pending |
+| TAURI-04 | Phase 1 | Pending |
+| TAURI-05 | Phase 1 | Pending |
+| TAURI-06 | Phase 1 | Pending |
+| VSTOR-01 | Phase 1 | Pending |
+| VSTOR-02 | Phase 1 | Pending |
+| VSTOR-03 | Phase 1 | Pending |
+| VSTOR-04 | Phase 1 | Pending |
+| DPIP-01 | Phase 2 | Pending |
+| DPIP-02 | Phase 2 | Pending |
+| DPIP-03 | Phase 2 | Pending |
+| DPIP-04 | Phase 2 | Pending |
+| DPIP-05 | Phase 2 | Pending |
+| DPIP-06 | Phase 2 | Pending |
+| DPIP-07 | Phase 2 | Pending |
+| DPIP-08 | Phase 2 | Pending |
+| DPIP-09 | Phase 2 | Pending |
+| FWAT-01 | Phase 2 | Pending |
+| FWAT-02 | Phase 2 | Pending |
+| FWAT-03 | Phase 2 | Pending |
+| FWAT-04 | Phase 2 | Pending |
+| FWAT-05 | Phase 2 | Pending |
+| FWAT-06 | Phase 2 | Pending |
+| SRCH-01 | Phase 3 | Pending |
+| SRCH-02 | Phase 3 | Pending |
+| SRCH-03 | Phase 3 | Pending |
+| SRCH-04 | Phase 3 | Pending |
+| SRCH-05 | Phase 3 | Pending |
+| SRCH-06 | Phase 3 | Pending |
+| SPAC-01 | Phase 3 | Pending |
+| SPAC-02 | Phase 3 | Pending |
+| SPAC-03 | Phase 3 | Pending |
+| SPAC-04 | Phase 3 | Pending |
+| SPAC-05 | Phase 3 | Pending |
+| SPAC-06 | Phase 3 | Pending |
+| SPAC-07 | Phase 3 | Pending |
+| INTL-01 | Phase 3 | Pending |
+| INTL-02 | Phase 3 | Pending |
+| INTL-03 | Phase 3 | Pending |
+| INTL-04 | Phase 3 | Pending |
+| PAGE-01 | Phase 4 | Pending |
+| PAGE-02 | Phase 4 | Pending |
+| PAGE-03 | Phase 4 | Pending |
+| PAGE-04 | Phase 4 | Pending |
+| PAGE-05 | Phase 4 | Pending |
+| PAGE-06 | Phase 4 | Pending |
+| PAGE-07 | Phase 4 | Pending |
+| PAGE-08 | Phase 4 | Pending |
+| PAGE-09 | Phase 4 | Pending |
+| PAGE-10 | Phase 4 | Pending |
+| PAGE-11 | Phase 4 | Pending |
+| PAGE-12 | Phase 4 | Pending |
+| UX-01 | Phase 4 | Pending |
+| UX-02 | Phase 4 | Pending |
+| UX-03 | Phase 4 | Pending |
+| UX-04 | Phase 4 | Pending |
 
 **Coverage:**
-- v1 requirements: 50 total
-- Mapped to phases: 0
-- Unmapped: 50
+- v1 requirements: 58 total (note: original file said 50, actual count is 58)
+- Mapped to phases: 58
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-02-27*
-*Last updated: 2026-02-27 after initial definition*
+*Last updated: 2026-02-27 after roadmap creation (traceability populated)*
