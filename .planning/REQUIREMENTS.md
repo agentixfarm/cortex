@@ -23,10 +23,10 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **DPIP-03**: Plain text and Markdown direct read
 - [x] **DPIP-04**: Spreadsheet indexing (XLSX, CSV) via calamine
 - [x] **DPIP-05**: OCR for images via tesseract bindings (opt-in per folder)
-- [ ] **DPIP-06**: Local ONNX embedding generation (all-MiniLM-L6-v2, 384-dim) via fastembed
-- [ ] **DPIP-07**: Optional API embedding (OpenAI text-embedding-3-small, 1536-dim)
+- [x] **DPIP-06**: Local ONNX embedding generation (all-MiniLM-L6-v2, 384-dim) via fastembed
+- [x] **DPIP-07**: Optional API embedding (OpenAI text-embedding-3-small, 1536-dim)
 - [x] **DPIP-08**: Content hash computation for change detection
-- [ ] **DPIP-09**: Entity extraction: dates, amounts, people, organizations, locations
+- [x] **DPIP-09**: Entity extraction: dates, amounts, people, organizations, locations
 
 ### Vector Storage
 
@@ -147,10 +147,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | DPIP-03 | Phase 2 | Complete |
 | DPIP-04 | Phase 2 | Complete |
 | DPIP-05 | Phase 2 | Complete |
-| DPIP-06 | Phase 2 | Pending |
-| DPIP-07 | Phase 2 | Pending |
+| DPIP-06 | Phase 2 | Complete |
+| DPIP-07 | Phase 2 | Complete |
 | DPIP-08 | Phase 2 | Complete |
-| DPIP-09 | Phase 2 | Pending |
+| DPIP-09 | Phase 2 | Complete |
 | FWAT-01 | Phase 2 | Pending |
 | FWAT-02 | Phase 2 | Pending |
 | FWAT-03 | Phase 2 | Pending |

@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-02-27T16:05:31.366Z"
+last_updated: "2026-02-27T17:03:00.785Z"
 progress:
   total_phases: 2
   completed_phases: 1
   total_plans: 10
-  completed_plans: 6
+  completed_plans: 8
 ---
 
 # Project State
@@ -23,11 +23,11 @@ See: .planning/PROJECT.md (updated 2026-02-27)
 ## Current Position
 
 Phase: 2 of 4 (Document Pipeline and File Watching) — In Progress
-Plan: 1 of 5 complete (Plan 01 done)
-Status: Phase 2 in progress — document parser and hasher complete
-Last activity: 2026-02-27 — Completed Plan 01 (Document parser, content hasher, Phase 2 Cargo deps)
+Plan: 2 of 5 complete (Plan 02 done)
+Status: Phase 2 in progress — embedding service and entity extractor complete
+Last activity: 2026-02-27 — Completed Plan 02 (EmbeddingService fastembed wrapper, EntityExtractor regex)
 
-Progress: [█████░░░░░] 30%
+Progress: [██████░░░░] 38%
 
 ## Performance Metrics
 
@@ -50,6 +50,8 @@ Progress: [█████░░░░░] 30%
 | Phase 01-tauri-foundation P03 | 3 | 2 tasks | 8 files |
 | Phase 01-tauri-foundation P05 | 5 | 3 tasks | 7 files |
 | Phase 02-document-pipeline-and-file-watching P01 | 4 | 2 tasks | 6 files |
+| Phase 02-document-pipeline-and-file-watching P02 | 8 | 2 tasks | 4 files |
+| Phase 02-document-pipeline-and-file-watching P04 | 8 | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -78,6 +80,8 @@ Recent decisions affecting current work:
 - [Phase 01]: Types use ISO string dates for Rust serde compatibility; React Query queryKeys factory enables precise cache invalidation
 - [Phase 02-01]: docx-rust 0.1 used (0.2 not on crates.io); Body.text() used instead of manual paragraph traversal
 - [Phase 02-01]: AppError::Embedding added in Plan 01 to prevent both plans 01 and 02 modifying error.rs
+- [Phase 02-02]: std::sync::Mutex for fastembed model — embed() is sync, called inside spawn_blocking; avoids async lock in sync context
+- [Phase 02-02]: Integration tests (fastembed model download) marked #[ignore] for CI; fast unit tests cover truncation and regex logic
 
 ### Pending Todos
 
