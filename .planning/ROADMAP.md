@@ -76,6 +76,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Tauri Foundation | 5/5 | Complete   | 2026-02-27 |
-| 2. Document Pipeline and File Watching | 0/TBD | Not started | - |
+| 2. Document Pipeline and File Watching | 1/5 | In Progress|  |
 | 3. Search Intelligence and Smart Spaces | 0/TBD | Not started | - |
 | 4. Frontend Integration and UX | 0/TBD | Not started | - |

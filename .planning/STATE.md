@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-02-27T13:58:03.700Z"
+last_updated: "2026-02-27T16:05:31.366Z"
 progress:
-  total_phases: 1
+  total_phases: 2
   completed_phases: 1
-  total_plans: 5
-  completed_plans: 5
+  total_plans: 10
+  completed_plans: 6
 ---
 
 # Project State
@@ -18,16 +18,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-02-27)
 
 **Core value:** Documents sort themselves into meaningful spaces through AI-powered clustering; users find anything with natural language search — all running locally.
-**Current focus:** Phase 1 — Tauri Foundation
+**Current focus:** Phase 2 — Document Pipeline and File Watching
 
 ## Current Position
 
-Phase: 1 of 4 (Tauri Foundation) — COMPLETE
-Plan: 5 of 5 in current phase (all complete)
-Status: Phase 1 complete, ready for Phase 2
-Last activity: 2026-02-27 — Completed Plan 05 (Dual-mode frontend hooks and React/Tailwind upgrades)
+Phase: 2 of 4 (Document Pipeline and File Watching) — In Progress
+Plan: 1 of 5 complete (Plan 01 done)
+Status: Phase 2 in progress — document parser and hasher complete
+Last activity: 2026-02-27 — Completed Plan 01 (Document parser, content hasher, Phase 2 Cargo deps)
 
-Progress: [████░░░░░░] 25%
+Progress: [█████░░░░░] 30%
 
 ## Performance Metrics
 
@@ -49,6 +49,7 @@ Progress: [████░░░░░░] 25%
 *Updated after each plan completion*
 | Phase 01-tauri-foundation P03 | 3 | 2 tasks | 8 files |
 | Phase 01-tauri-foundation P05 | 5 | 3 tasks | 7 files |
+| Phase 02-document-pipeline-and-file-watching P01 | 4 | 2 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -75,6 +76,8 @@ Recent decisions affecting current work:
 - [Phase 01]: TailwindCSS 4 CSS-first config: theme tokens migrated to @theme {} in global.css, eliminating tailwind.config.ts and postcss.config.js
 - [Phase 01]: isTauri() uses window.__TAURI__ for Tauri 2 runtime detection; tauriInvoke() pattern enables zero-config dual-mode operation
 - [Phase 01]: Types use ISO string dates for Rust serde compatibility; React Query queryKeys factory enables precise cache invalidation
+- [Phase 02-01]: docx-rust 0.1 used (0.2 not on crates.io); Body.text() used instead of manual paragraph traversal
+- [Phase 02-01]: AppError::Embedding added in Plan 01 to prevent both plans 01 and 02 modifying error.rs
 
 ### Pending Todos
 
@@ -89,5 +92,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-27
-Stopped at: Completed 01-05-PLAN.md (Dual-mode frontend hooks and React/Tailwind upgrades) — Phase 1 complete
+Stopped at: Completed 02-01-PLAN.md (Document parser and content hasher) — Phase 2 Plan 1 complete
 Resume file: None

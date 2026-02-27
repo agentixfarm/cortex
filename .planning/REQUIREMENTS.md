@@ -18,14 +18,14 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Document Pipeline
 
-- [ ] **DPIP-01**: PDF text extraction via pdf-extract/lopdf
-- [ ] **DPIP-02**: DOCX parsing via docx-rust
-- [ ] **DPIP-03**: Plain text and Markdown direct read
-- [ ] **DPIP-04**: Spreadsheet indexing (XLSX, CSV) via calamine
-- [ ] **DPIP-05**: OCR for images via tesseract bindings (opt-in per folder)
+- [x] **DPIP-01**: PDF text extraction via pdf-extract/lopdf
+- [x] **DPIP-02**: DOCX parsing via docx-rust
+- [x] **DPIP-03**: Plain text and Markdown direct read
+- [x] **DPIP-04**: Spreadsheet indexing (XLSX, CSV) via calamine
+- [x] **DPIP-05**: OCR for images via tesseract bindings (opt-in per folder)
 - [ ] **DPIP-06**: Local ONNX embedding generation (all-MiniLM-L6-v2, 384-dim) via fastembed
 - [ ] **DPIP-07**: Optional API embedding (OpenAI text-embedding-3-small, 1536-dim)
-- [ ] **DPIP-08**: Content hash computation for change detection
+- [x] **DPIP-08**: Content hash computation for change detection
 - [ ] **DPIP-09**: Entity extraction: dates, amounts, people, organizations, locations
 
 ### Vector Storage
@@ -142,14 +142,14 @@ Which phases cover which requirements. Updated during roadmap creation.
 | VSTOR-02 | Phase 1 | Complete |
 | VSTOR-03 | Phase 1 | Complete |
 | VSTOR-04 | Phase 1 | Complete |
-| DPIP-01 | Phase 2 | Pending |
-| DPIP-02 | Phase 2 | Pending |
-| DPIP-03 | Phase 2 | Pending |
-| DPIP-04 | Phase 2 | Pending |
-| DPIP-05 | Phase 2 | Pending |
+| DPIP-01 | Phase 2 | Complete |
+| DPIP-02 | Phase 2 | Complete |
+| DPIP-03 | Phase 2 | Complete |
+| DPIP-04 | Phase 2 | Complete |
+| DPIP-05 | Phase 2 | Complete |
 | DPIP-06 | Phase 2 | Pending |
 | DPIP-07 | Phase 2 | Pending |
-| DPIP-08 | Phase 2 | Pending |
+| DPIP-08 | Phase 2 | Complete |
 | DPIP-09 | Phase 2 | Pending |
 | FWAT-01 | Phase 2 | Pending |
 | FWAT-02 | Phase 2 | Pending |
