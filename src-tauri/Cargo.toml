@@ -26,6 +26,9 @@ serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 tokio = { version = "1", features = ["full"] }
 thiserror = "1"
+ruvector-core = { path = "../../experiments/ruvector/crates/ruvector-core" }
+ruvector-collections = { path = "../../experiments/ruvector/crates/ruvector-collections" }
+ruvector-filter = { path = "../../experiments/ruvector/crates/ruvector-filter" }
 
 [profile.release]
 panic = "abort"
