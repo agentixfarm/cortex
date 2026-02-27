@@ -1,6 +1,7 @@
 mod error;
 mod state;
 mod engine;
+mod types;
 
 use std::sync::Arc;
 use tokio::sync::Mutex;
