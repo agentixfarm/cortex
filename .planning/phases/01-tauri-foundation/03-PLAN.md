@@ -1,6 +1,4 @@
-# Plan 03: IPC Command Stubs with spawn_blocking Pattern
-
-```yaml
+---
 wave: 3
 depends_on: [PLAN-01, PLAN-02]
 requirements: [TAURI-04]
@@ -14,7 +12,9 @@ files_modified:
   - src-tauri/src/types.rs
   - src-tauri/src/lib.rs
 autonomous: true
-```
+---
+
+# Plan 03: IPC Command Stubs with spawn_blocking Pattern
 
 ## Goal
 

@@ -1,6 +1,4 @@
-# Plan 05: Dual-Mode Frontend Hooks and React/Tailwind Upgrades
-
-```yaml
+---
 wave: 4
 depends_on: [PLAN-01, PLAN-03]
 requirements: [TAURI-05]
@@ -13,7 +11,9 @@ files_modified:
   - postcss.config.js
   - vite.config.ts
 autonomous: true
-```
+---
+
+# Plan 05: Dual-Mode Frontend Hooks and React/Tailwind Upgrades
 
 ## Goal
 

@@ -1,6 +1,4 @@
-# Plan 02: AppError Enum and AppState Struct
-
-```yaml
+---
 wave: 2
 depends_on: [PLAN-01]
 requirements: [TAURI-03, TAURI-06]
@@ -11,7 +9,9 @@ files_modified:
   - src-tauri/src/lib.rs
   - src-tauri/Cargo.toml
 autonomous: true
-```
+---
+
+# Plan 02: AppError Enum and AppState Struct
 
 ## Goal
 

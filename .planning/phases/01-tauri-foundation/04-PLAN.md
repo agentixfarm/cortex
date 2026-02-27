@@ -1,6 +1,4 @@
-# Plan 04: RuVector Core Integration and Multi-Collection Storage
-
-```yaml
+---
 wave: 3
 depends_on: [PLAN-02]
 requirements: [VSTOR-01, VSTOR-02, VSTOR-03, VSTOR-04]
@@ -9,7 +7,9 @@ files_modified:
   - src-tauri/src/engine.rs
   - src-tauri/src/lib.rs
 autonomous: true
-```
+---
+
+# Plan 04: RuVector Core Integration and Multi-Collection Storage
 
 ## Goal
 

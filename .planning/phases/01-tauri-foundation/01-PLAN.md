@@ -1,6 +1,4 @@
-# Plan 01: Tauri 2 Scaffold and Express Removal
-
-```yaml
+---
 wave: 1
 depends_on: []
 requirements: [TAURI-01, TAURI-02]
@@ -16,7 +14,9 @@ files_modified:
   - vite.config.ts
   - index.html
 autonomous: true
-```
+---
+
+# Plan 01: Tauri 2 Scaffold and Express Removal
 
 ## Goal
 
