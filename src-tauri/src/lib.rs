@@ -3,6 +3,7 @@ mod error;
 mod state;
 mod engine;
 mod types;
+pub mod pipeline;
 
 use std::sync::Arc;
 use tokio::sync::Mutex;
