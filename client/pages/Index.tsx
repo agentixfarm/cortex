@@ -4,7 +4,11 @@ import {
   Brain,
   Clock,
   HardDrive,
-  TrendingUp,
+  Home,
+  Users,
+  Briefcase,
+  Receipt,
+  Activity,
 } from "lucide-react";
 
 export default function Dashboard() {
@@ -41,28 +45,24 @@ export default function Dashboard() {
       name: "Property_Tax_2025.pdf",
       space: "Property > Tax",
       date: "Feb 15",
-      thumbnail: "📄",
     },
     {
       id: 2,
       name: "Home_Insurance.pdf",
       space: "Property > Insurance",
       date: "Jan 3",
-      thumbnail: "📄",
     },
     {
       id: 3,
       name: "School_Report.pdf",
       space: "Kids > School",
       date: "Feb 10",
-      thumbnail: "📄",
     },
     {
       id: 4,
       name: "Invoice_Feb2026.pdf",
       space: "Invoices",
       date: "Feb 20",
-      thumbnail: "📄",
     },
   ];
 
@@ -71,21 +71,21 @@ export default function Dashboard() {
       id: 1,
       name: "Property",
       count: 12,
-      icon: "🏠",
+      icon: Home,
       color: "border-purple-500",
     },
     {
       id: 2,
       name: "Kids",
       count: 34,
-      icon: "👶",
+      icon: Users,
       color: "border-green-500",
     },
     {
       id: 3,
       name: "Work",
       count: 156,
-      icon: "💼",
+      icon: Briefcase,
       color: "border-blue-500",
     },
   ];
@@ -152,7 +152,9 @@ export default function Dashboard() {
           {recentDocuments.map((doc) => (
             <div key={doc.id} className="card p-4 hover:shadow-md transition-shadow">
               <div className="flex items-start gap-3">
-                <div className="text-3xl">{doc.thumbnail}</div>
+                <div className="p-2 rounded-lg bg-accent-subtle text-accent-primary flex-shrink-0">
+                  <FileText size={20} />
+                </div>
                 <div className="flex-1 min-w-0">
                   <p className="font-medium text-text-primary text-sm truncate">
                     {doc.name}
@@ -178,30 +180,35 @@ export default function Dashboard() {
           </Link>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {topSpaces.map((space) => (
-            <Link
-              key={space.id}
-              to={`/spaces/${space.name.toLowerCase()}`}
-              className="card p-6 hover:shadow-lg hover:border-accent-primary/50 transition-all border-l-4"
-              style={{
-                borderLeftColor: `var(--${space.color.split("-")[1]}-500)`,
-              }}
-            >
-              <div className="space-y-3">
-                <div className="flex items-start justify-between">
-                  <div className="text-4xl">{space.icon}</div>
+          {topSpaces.map((space) => {
+            const IconComponent = space.icon;
+            return (
+              <Link
+                key={space.id}
+                to={`/spaces/${space.name.toLowerCase()}`}
+                className="card p-6 hover:shadow-lg hover:border-accent-primary/50 transition-all border-l-4"
+                style={{
+                  borderLeftColor: `var(--${space.color.split("-")[1]}-500)`,
+                }}
+              >
+                <div className="space-y-3">
+                  <div className="flex items-start justify-between">
+                    <div className="p-2 rounded-lg bg-accent-subtle text-accent-primary">
+                      <IconComponent size={24} />
+                    </div>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-text-primary text-lg">
+                      {space.name}
+                    </p>
+                    <p className="text-text-tertiary text-sm">
+                      {space.count} documents
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <p className="font-semibold text-text-primary text-lg">
-                    {space.name}
-                  </p>
-                  <p className="text-text-tertiary text-sm">
-                    {space.count} documents
-                  </p>
-                </div>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            );
+          })}
         </div>
       </div>
 

@@ -136,18 +136,18 @@ export function Sidebar() {
                 key={space.name}
                 to={`/spaces/${space.name.toLowerCase()}`}
                 className={cn(
-                  "group flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-bg-tertiary",
+                  "group flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-bg-tertiary",
                   isActive(`/spaces/${space.name.toLowerCase()}`)
                     ? "bg-bg-tertiary text-text-primary"
                     : "text-text-secondary"
                 )}
               >
                 <div
-                  className={cn("h-2 w-2 rounded-full", space.color)}
+                  className={cn("h-2 w-2 rounded-full flex-shrink-0", space.color)}
                 />
                 {!isCollapsed && (
                   <>
-                    <span className="flex-1">{space.name}</span>
+                    <span className="flex-1 truncate">{space.name}</span>
                     <span className="text-xs text-text-tertiary">
                       {space.count}
                     </span>
