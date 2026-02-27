@@ -12,7 +12,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **TAURI-01**: Tauri 2 shell wraps existing React frontend with WebView
 - [x] **TAURI-02**: Express server removed, replaced by Tauri IPC command stubs
 - [x] **TAURI-03**: AppError enum with serde::Serialize for all IPC error handling
-- [ ] **TAURI-04**: spawn_blocking pattern established for all CPU-bound operations
+- [x] **TAURI-04**: spawn_blocking pattern established for all CPU-bound operations
 - [ ] **TAURI-05**: Dual-mode frontend hooks (mock data in dev, Tauri invoke in production)
 - [x] **TAURI-06**: AppState struct with Arc<CortexEngine> and channel senders
 
@@ -135,7 +135,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | TAURI-01 | Phase 1 | Complete |
 | TAURI-02 | Phase 1 | Complete |
 | TAURI-03 | Phase 1 | Complete |
-| TAURI-04 | Phase 1 | Pending |
+| TAURI-04 | Phase 1 | Complete |
 | TAURI-05 | Phase 1 | Pending |
 | TAURI-06 | Phase 1 | Complete |
 | VSTOR-01 | Phase 1 | Pending |
