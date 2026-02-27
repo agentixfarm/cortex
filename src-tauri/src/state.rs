@@ -5,8 +5,15 @@ use crate::engine::CortexEngine;
 
 /// Commands sent to the file watcher background task.
 pub enum WatcherCommand {
+    /// Start watching a new folder.
+    AddFolder { path: String, folder_id: String },
+    /// Stop watching a folder and remove it from active watchers.
+    RemoveFolder { folder_id: String, path: String },
+    /// Pause watching all folders (unwatch without removing config).
     Pause,
+    /// Resume watching all non-paused folders.
     Resume,
+    /// Shut down the watcher task cleanly.
     Shutdown,
 }
 

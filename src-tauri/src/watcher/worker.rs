@@ -3,7 +3,7 @@ use std::sync::Arc;
 use std::time::Duration;
 
 use notify_debouncer_mini::{new_debouncer, DebounceEventResult, DebouncedEventKind};
-use notify::RecursiveMode;
+use notify_debouncer_mini::notify::RecursiveMode;
 use serde::Serialize;
 use tauri::Emitter;
 
@@ -68,6 +68,7 @@ pub fn spawn_watcher_task(
                             DebouncedEventKind::Any | DebouncedEventKind::AnyContinuous => {
                                 FileEventKind::CreateOrModify
                             }
+                            _ => FileEventKind::CreateOrModify,
                         };
                         let _ = file_tx_clone.blocking_send(FileEvent {
                             path: event.path,
@@ -75,10 +76,8 @@ pub fn spawn_watcher_task(
                         });
                     }
                 }
-                Err(errors) => {
-                    for e in errors {
-                        eprintln!("[watcher] notify error: {e}");
-                    }
+                Err(e) => {
+                    eprintln!("[watcher] notify error: {e}");
                 }
             },
         ) {
