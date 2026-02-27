@@ -21,6 +21,9 @@ pub enum AppError {
 
     #[error("Internal error: {0}")]
     Internal(String),
+
+    #[error("Embedding error: {0}")]
+    Embedding(String),
 }
 
 impl From<std::io::Error> for AppError {

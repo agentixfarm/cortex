@@ -29,6 +29,15 @@ thiserror = "1"
 ruvector-core = { path = "../../experiments/ruvector/crates/ruvector-core" }
 ruvector-collections = { path = "../../experiments/ruvector/crates/ruvector-collections" }
 ruvector-filter = { path = "../../experiments/ruvector/crates/ruvector-filter" }
+fastembed = "5"
+notify-debouncer-mini = "0.4"
+pdf-extract = "0.10"
+docx-rust = "0.1"
+calamine = { version = "0.24", features = ["dates"] }
+sha2 = "0.10"
+regex = "1"
+uuid = { version = "1", features = ["v4"] }
+digest = "0.10"
 
 [profile.release]
 panic = "abort"
