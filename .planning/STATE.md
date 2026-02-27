@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-02-27T13:43:35.715Z"
+last_updated: "2026-02-27T13:52:04.893Z"
 progress:
   total_phases: 1
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 5
-  completed_plans: 3
+  completed_plans: 5
 ---
 
 # Project State
@@ -22,12 +22,12 @@ See: .planning/PROJECT.md (updated 2026-02-27)
 
 ## Current Position
 
-Phase: 1 of 4 (Tauri Foundation)
-Plan: 4 of 5 in current phase
-Status: In progress
-Last activity: 2026-02-27 — Completed Plan 04 (RuVector core integration and multi-collection storage)
+Phase: 1 of 4 (Tauri Foundation) — COMPLETE
+Plan: 5 of 5 in current phase (all complete)
+Status: Phase 1 complete, ready for Phase 2
+Last activity: 2026-02-27 — Completed Plan 05 (Dual-mode frontend hooks and React/Tailwind upgrades)
 
-Progress: [██░░░░░░░░] 10%
+Progress: [████░░░░░░] 25%
 
 ## Performance Metrics
 
@@ -48,6 +48,7 @@ Progress: [██░░░░░░░░] 10%
 
 *Updated after each plan completion*
 | Phase 01-tauri-foundation P03 | 3 | 2 tasks | 8 files |
+| Phase 01-tauri-foundation P05 | 5 | 3 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -71,6 +72,9 @@ Recent decisions affecting current work:
 - [Phase 01-04]: Path from src-tauri/ to ruvector is ../../experiments/ruvector (not ../../../) — cortex and experiments are siblings under apps/
 - [Phase 01-04]: tauri::Manager trait must be in scope for setup hook to call app.path() and app.manage()
 - [Phase 01-04]: CollectionManager creates directories itself; AlreadyExists on collection creation ignored for idempotent restarts
+- [Phase 01]: TailwindCSS 4 CSS-first config: theme tokens migrated to @theme {} in global.css, eliminating tailwind.config.ts and postcss.config.js
+- [Phase 01]: isTauri() uses window.__TAURI__ for Tauri 2 runtime detection; tauriInvoke() pattern enables zero-config dual-mode operation
+- [Phase 01]: Types use ISO string dates for Rust serde compatibility; React Query queryKeys factory enables precise cache invalidation
 
 ### Pending Todos
 
@@ -80,10 +84,10 @@ None yet.
 
 - Phase 2 needs research: fastembed API integration, RuVector core insert/query surface, embedding chunking for long docs
 - Phase 3 needs research: ruvector-gnn incremental clustering API, ruvector-attention call signature, SONA LearningSignal API
-- Pre-existing TypeScript errors in client/components/layout/Sidebar.tsx (Lucide prop type mismatch) — out of scope for Plan 01, should be addressed before Plan 05
+- TypeScript typecheck passes cleanly with React 19 + TailwindCSS 4 (no Sidebar Lucide prop errors found — resolved by React 19 types)
 
 ## Session Continuity
 
 Last session: 2026-02-27
-Stopped at: Completed 01-04-PLAN.md (RuVector core integration and multi-collection storage)
+Stopped at: Completed 01-05-PLAN.md (Dual-mode frontend hooks and React/Tailwind upgrades) — Phase 1 complete
 Resume file: None

@@ -12,7 +12,7 @@ Cortex starts as an existing React frontend with mock data and transforms into a
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Tauri Foundation** - Tauri 2 shell, type contracts, vector storage, and spawn_blocking patterns established before any pipeline code
+- [x] **Phase 1: Tauri Foundation** - Tauri 2 shell, type contracts, vector storage, and spawn_blocking patterns established before any pipeline code (completed 2026-02-27)
 - [ ] **Phase 2: Document Pipeline and File Watching** - Full ingestion loop: parse, embed, hash, extract entities, watch folders, index in background
 - [ ] **Phase 3: Search Intelligence and Smart Spaces** - Semantic search, GNN clustering, graph edges, SONA self-learning, attention re-ranking
 - [ ] **Phase 4: Frontend Integration and UX** - All 12 pages wired to live backend, command palette, onboarding, system tray, keyboard shortcuts
@@ -75,7 +75,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Tauri Foundation | 4/5 | In Progress|  |
+| 1. Tauri Foundation | 5/5 | Complete   | 2026-02-27 |
 | 2. Document Pipeline and File Watching | 0/TBD | Not started | - |
 | 3. Search Intelligence and Smart Spaces | 0/TBD | Not started | - |
 | 4. Frontend Integration and UX | 0/TBD | Not started | - |
