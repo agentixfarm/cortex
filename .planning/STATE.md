@@ -10,28 +10,28 @@ See: .planning/PROJECT.md (updated 2026-02-27)
 ## Current Position
 
 Phase: 1 of 4 (Tauri Foundation)
-Plan: 1 of 5 in current phase
+Plan: 2 of 5 in current phase
 Status: In progress
-Last activity: 2026-02-27 — Completed Plan 01 (Tauri 2 scaffold + Express removal)
+Last activity: 2026-02-27 — Completed Plan 02 (AppError enum and AppState struct)
 
-Progress: [█░░░░░░░░░] 5%
+Progress: [██░░░░░░░░] 10%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 1
-- Average duration: 5 min
-- Total execution time: 0.08 hours
+- Total plans completed: 2
+- Average duration: 4 min
+- Total execution time: 0.13 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 01-tauri-foundation | 1 | 5 min | 5 min |
+| 01-tauri-foundation | 2 | 8 min | 4 min |
 
 **Recent Trend:**
-- Last 5 plans: 5 min
-- Trend: —
+- Last 5 plans: 5 min, 3 min
+- Trend: Fast
 
 *Updated after each plan completion*
 
@@ -49,6 +49,9 @@ Recent decisions affecting current work:
 - [01-01]: Icons generated with RGBA color type (required by Tauri generate_context! macro validation)
 - [01-01]: Vite outDir changed from dist/spa to dist/ to match tauri.conf.json frontendDist
 - [01-02]: vite.config.ts cleaned to remove express plugin (was importing deleted server/)
+- [01-02]: AppError uses thiserror derives + serde tagged JSON (#[serde(tag="kind", content="message")]) for frontend discriminated union pattern
+- [01-02]: tokio::sync::Mutex chosen over std::sync::Mutex — Tauri command handlers are async, state crosses .await points
+- [01-02]: CortexEngine intentionally left as empty placeholder — RuVector fields deferred to Plan 04 as designed
 
 ### Pending Todos
 
@@ -63,5 +66,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-27
-Stopped at: Completed 01-01-PLAN.md (Tauri 2 scaffold + Express removal)
+Stopped at: Completed 01-02-PLAN.md (AppError enum and AppState struct)
 Resume file: None
