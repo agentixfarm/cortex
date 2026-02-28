@@ -43,12 +43,19 @@ pub async fn search_documents(
     filters: SearchFilters,
     state: State<'_, AppState>,
 ) -> Result<Vec<SearchResult>, AppError> {
-    let _engine = state.engine.clone();
-    let _query = query;
-    let _filters = filters;
+    let engine = state.engine.clone();
+    let embedding_service = state.embedding_service.clone();
+    let query_owned = query.clone();
+    let filters_owned = filters.clone();
+
     let results = tokio::task::spawn_blocking(move || {
-        // Phase 3 will implement real search via RuVector
-        Ok::<Vec<SearchResult>, AppError>(vec![])
+        let engine_guard = engine.blocking_lock();
+        crate::search::query::search_documents_impl(
+            &query_owned,
+            &filters_owned,
+            &engine_guard,
+            &embedding_service,
+        )
     })
     .await??;
     Ok(results)
