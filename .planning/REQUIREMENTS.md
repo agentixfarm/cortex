@@ -76,10 +76,10 @@ Requirements for initial release. Each maps to roadmap phases.
 - [ ] **PAGE-02**: Smart Spaces grid (auto-organized, grid/list toggle)
 - [ ] **PAGE-03**: Space detail (sub-spaces, document list, related spaces)
 - [ ] **PAGE-04**: Search page (split-pane: results + preview panel, filters)
-- [ ] **PAGE-05**: Recent documents timeline (Today/Yesterday/This Week)
-- [ ] **PAGE-06**: Favorites page (starred documents with sort)
-- [ ] **PAGE-07**: Tag cloud page (auto-generated + user-created tags)
-- [ ] **PAGE-08**: Watched folders management (add/remove/pause, file type toggles, exclusions)
+- [x] **PAGE-05**: Recent documents timeline (Today/Yesterday/This Week)
+- [x] **PAGE-06**: Favorites page (starred documents with sort)
+- [x] **PAGE-07**: Tag cloud page (auto-generated + user-created tags)
+- [x] **PAGE-08**: Watched folders management (add/remove/pause, file type toggles, exclusions)
 - [ ] **PAGE-09**: Insights/analytics (donut chart, area chart, bar chart, space network graph)
 - [ ] **PAGE-10**: Settings: General, Indexing, AI & Models, Privacy, Storage, About
 - [ ] **PAGE-11**: Document detail: preview (65%) + metadata sidebar (35%)
@@ -178,10 +178,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | PAGE-02 | Phase 4 | Pending |
 | PAGE-03 | Phase 4 | Pending |
 | PAGE-04 | Phase 4 | Pending |
-| PAGE-05 | Phase 4 | Pending |
-| PAGE-06 | Phase 4 | Pending |
-| PAGE-07 | Phase 4 | Pending |
-| PAGE-08 | Phase 4 | Pending |
+| PAGE-05 | Phase 4 | Complete |
+| PAGE-06 | Phase 4 | Complete |
+| PAGE-07 | Phase 4 | Complete |
+| PAGE-08 | Phase 4 | Complete |
 | PAGE-09 | Phase 4 | Pending |
 | PAGE-10 | Phase 4 | Pending |
 | PAGE-11 | Phase 4 | Pending |

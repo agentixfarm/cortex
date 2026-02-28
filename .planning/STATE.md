@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-last_updated: "2026-02-28T13:59:00.000Z"
+last_updated: "2026-02-28T14:05:00.000Z"
 progress:
   total_phases: 4
   completed_phases: 3
   total_plans: 21
-  completed_plans: 16
+  completed_plans: 17
 ---
 
 # Project State
@@ -23,11 +23,11 @@ See: .planning/PROJECT.md (updated 2026-02-27)
 ## Current Position
 
 Phase: 4 of 4 (Frontend Integration and UX) -- Executing
-Plan: 1 of 6 complete
-Status: Plan 04-01 (type alignment) complete. Wave 2 (04-02/03/04/05) ready.
-Last activity: 2026-02-28 -- Plan 04-01 executed: serde camelCase on all Rust IPC types, TS types aligned, mock data updated
+Plan: 4 of 6 complete (04-01, 04-02/03/04 wave 2 done)
+Status: Plan 04-04 (secondary pages) complete. Wave 3 (04-05/06) next.
+Last activity: 2026-02-28 -- Plan 04-04 executed: Recent, Favorites, Tags, Watched Folders pages built
 
-Progress: [████████████████░░░░] 76%
+Progress: [████████████████░░░░] 81%
 
 ## Performance Metrics
 
@@ -42,7 +42,7 @@ Progress: [████████████████░░░░] 76%
 | 01-tauri-foundation | 5/5 | Complete |
 | 02-document-pipeline-and-file-watching | 5/5 | Complete |
 | 03-search-intelligence-and-smart-spaces | 5/5 | Complete |
-| 04-frontend-integration-and-ux | 1/6 | In Progress |
+| 04-frontend-integration-and-ux | 4/6 | In Progress |
 
 **Test Counts:**
 | Phase | Tests Added | Total |
@@ -93,6 +93,10 @@ Recent decisions affecting current work:
 - [Phase 04-01]: ActivityItem uses #[serde(rename="type")] on activity_type field to avoid Rust keyword collision
 - [Phase 04-01]: TopQuery as separate struct for structured search analytics (query + count)
 - [Phase 04-01]: Space subSpaces/sampleFiles required arrays (not optional) matching Rust Vec
+- [Phase 04-04]: Added useRecentDocuments/useFavoriteDocuments hooks inline (missing from Plan 02)
+- [Phase 04-04]: Tag cloud font size scales 14px-32px based on document count range
+- [Phase 04-04]: Tauri dialog import uses ts-ignore for optional plugin-dialog dependency
+- [Phase 04-04]: Pause/Resume buttons shown but disabled (backend support not yet available)
 
 ### Pending Todos
 
@@ -102,7 +106,7 @@ None yet.
 
 - Phase 4 planned with 6 plans across 3 waves
 - [RESOLVED by 04-01] Rust serde now uses camelCase JSON via rename_all
-- Missing backend commands: get_recent_documents, get_favorite_documents (Plan 02 adds these)
+- [RESOLVED by 04-02] get_recent_documents and get_favorite_documents backend commands added
 - [RESOLVED by 04-01] SearchAnalytics Rust type now matches TS type (TopQuery struct, queriesThisWeek)
 - [RESOLVED by 04-01] Settings types aligned between Rust and TS
 - [RESOLVED by 04-01] ActivityItem now has type and documentId fields
@@ -112,6 +116,6 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-28
-Stopped at: Completed 04-01-PLAN.md (type alignment). Wave 2 ready (04-02/03/04/05).
-Resume file: .planning/phases/04-frontend-integration-and-ux/04-02-PLAN.md
-Resume action: /gsd:execute-phase 4 -- will detect 1 SUMMARY, resume from Wave 2
+Stopped at: Completed 04-04-PLAN.md (secondary pages). Plans 04-05/06 remaining.
+Resume file: .planning/phases/04-frontend-integration-and-ux/04-05-PLAN.md
+Resume action: /gsd:execute-phase 4 -- will detect 4 SUMMARYs, resume from Wave 3
