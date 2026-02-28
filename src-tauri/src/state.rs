@@ -5,6 +5,7 @@ use tokio::sync::mpsc;
 use crate::engine::CortexEngine;
 use crate::pipeline::embedder::EmbeddingService;
 use crate::pipeline::indexer::DocumentIndexer;
+use crate::spaces::manager::SpaceManager;
 use crate::watcher::registry::WatcherRegistry;
 
 /// Commands sent to the file watcher background task.
@@ -42,4 +43,6 @@ pub struct AppState {
     pub registry: Arc<std::sync::Mutex<WatcherRegistry>>,
     /// Path to watcher-registry.json on disk.
     pub registry_path: PathBuf,
+    /// Smart Spaces manager: clustering, naming, manual moves.
+    pub space_manager: Arc<std::sync::Mutex<SpaceManager>>,
 }

@@ -6,6 +6,7 @@ mod types;
 pub mod pipeline;
 pub mod watcher;
 pub mod search;
+pub mod spaces;
 
 use std::sync::Arc;
 use tokio::sync::Mutex;
@@ -15,6 +16,7 @@ use state::AppState;
 use engine::CortexEngine;
 use pipeline::embedder::EmbeddingService;
 use pipeline::indexer::DocumentIndexer;
+use spaces::manager::SpaceManager;
 use watcher::registry::WatcherRegistry;
 
 pub fn run() {
@@ -62,6 +64,9 @@ pub fn run() {
                 watcher_rx,
             );
 
+            // Create SpaceManager for Smart Spaces
+            let space_manager = Arc::new(std::sync::Mutex::new(SpaceManager::new()));
+
             app.manage(AppState {
                 engine: engine_arc,
                 watcher_tx,
@@ -70,6 +75,7 @@ pub fn run() {
                 indexer,
                 registry,
                 registry_path,
+                space_manager,
             });
 
             Ok(())

@@ -1,5 +1,6 @@
 use tauri::State;
 use crate::error::AppError;
+use crate::search::query::build_document_from_metadata;
 use crate::state::AppState;
 use crate::types::*;
 
@@ -7,10 +8,12 @@ use crate::types::*;
 pub async fn get_spaces(
     state: State<'_, AppState>,
 ) -> Result<Vec<Space>, AppError> {
-    let _engine = state.engine.clone();
+    let space_mgr = state.space_manager.clone();
     let results = tokio::task::spawn_blocking(move || {
-        // Phase 2 will return real spaces from RuVector GNN clustering
-        Ok::<Vec<Space>, AppError>(vec![])
+        let guard = space_mgr
+            .lock()
+            .map_err(|e| AppError::Internal(e.to_string()))?;
+        Ok::<Vec<Space>, AppError>(guard.get_spaces())
     })
     .await??;
     Ok(results)
@@ -21,11 +24,38 @@ pub async fn get_space_documents(
     space_id: String,
     state: State<'_, AppState>,
 ) -> Result<Vec<Document>, AppError> {
-    let _engine = state.engine.clone();
-    let _space_id = space_id;
+    let space_mgr = state.space_manager.clone();
+    let engine = state.engine.clone();
+
     let results = tokio::task::spawn_blocking(move || {
-        // Phase 2 will query RuVector collections for documents in this space
-        Ok::<Vec<Document>, AppError>(vec![])
+        let space_guard = space_mgr
+            .lock()
+            .map_err(|e| AppError::Internal(e.to_string()))?;
+        let doc_ids = space_guard.get_space_documents(&space_id);
+
+        let engine_guard = engine.blocking_lock();
+        let collection_arc = engine_guard
+            .collections
+            .get_collection("documents_384")
+            .ok_or_else(|| {
+                AppError::VectorStorage("documents_384 collection not found".to_string())
+            })?;
+        let collection = collection_arc.read();
+
+        let mut documents: Vec<Document> = Vec::new();
+        for id in doc_ids {
+            let entry = collection
+                .db
+                .get(&id)
+                .map_err(|e| AppError::VectorStorage(e.to_string()))?;
+            if let Some(entry) = entry {
+                if let Some(ref metadata) = entry.metadata {
+                    documents.push(build_document_from_metadata(&id, metadata));
+                }
+            }
+        }
+
+        Ok::<Vec<Document>, AppError>(documents)
     })
     .await??;
     Ok(results)
@@ -37,12 +67,13 @@ pub async fn move_document_to_space(
     space_id: String,
     state: State<'_, AppState>,
 ) -> Result<(), AppError> {
-    let _engine = state.engine.clone();
-    let _doc_id = doc_id;
-    let _space_id = space_id;
+    let space_mgr = state.space_manager.clone();
+
     tokio::task::spawn_blocking(move || {
-        // Phase 2 will update the document's space assignment in RuVector
-        Ok::<(), AppError>(())
+        let mut guard = space_mgr
+            .lock()
+            .map_err(|e| AppError::Internal(e.to_string()))?;
+        guard.move_document(&doc_id, &space_id)
     })
     .await??;
     Ok(())
@@ -52,10 +83,15 @@ pub async fn move_document_to_space(
 pub async fn recluster_spaces(
     state: State<'_, AppState>,
 ) -> Result<Vec<Space>, AppError> {
-    let _engine = state.engine.clone();
+    let engine = state.engine.clone();
+    let space_mgr = state.space_manager.clone();
+
     let results = tokio::task::spawn_blocking(move || {
-        // Phase 2 will trigger a full GNN recluster via ruvector-gnn
-        Ok::<Vec<Space>, AppError>(vec![])
+        let engine_guard = engine.blocking_lock();
+        let mut space_guard = space_mgr
+            .lock()
+            .map_err(|e| AppError::Internal(e.to_string()))?;
+        space_guard.recluster(&engine_guard)
     })
     .await??;
     Ok(results)
