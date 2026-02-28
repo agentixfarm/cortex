@@ -8,6 +8,7 @@ use serde::Serialize;
 use tauri::Emitter;
 
 use crate::engine::CortexEngine;
+use crate::intelligence::analytics::ActivityLog;
 use crate::pipeline::embedder::EmbeddingService;
 use crate::pipeline::indexer::DocumentIndexer;
 use crate::state::WatcherCommand;
@@ -52,6 +53,7 @@ pub fn spawn_watcher_task(
     registry: Arc<std::sync::Mutex<WatcherRegistry>>,
     _registry_path: PathBuf,
     mut cmd_rx: tokio::sync::mpsc::Receiver<WatcherCommand>,
+    activity_log: Arc<std::sync::Mutex<ActivityLog>>,
 ) {
     tauri::async_runtime::spawn(async move {
         // Channel: notify callback (sync) -> async processing loop
@@ -148,18 +150,27 @@ pub fn spawn_watcher_task(
                             let ps = path_str.clone();
                             let fid = folder_id.clone();
                             let file_path = event.path.clone();
+                            let alog = activity_log.clone();
 
                             tokio::task::spawn_blocking(move || {
                                 let engine_guard = eng.blocking_lock();
                                 match idx.index_file(&file_path, &engine_guard, &emb) {
                                     Ok(doc_id) => {
                                         let _ = ah.emit("index-progress", IndexProgress {
-                                            file_path: ps,
+                                            file_path: ps.clone(),
                                             status: "indexed".to_string(),
                                             doc_id: Some(doc_id),
                                             error: None,
                                             folder_id: fid,
                                         });
+                                        // Record activity
+                                        if let Ok(mut log) = alog.lock() {
+                                            let file_name = std::path::Path::new(&ps)
+                                                .file_name()
+                                                .and_then(|n| n.to_str())
+                                                .unwrap_or(&ps);
+                                            log.record("indexed", file_name);
+                                        }
                                     }
                                     Err(e) => {
                                         let _ = ah.emit("index-progress", IndexProgress {

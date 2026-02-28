@@ -106,6 +106,70 @@ impl Default for SearchTracker {
     }
 }
 
+/// Persistent activity log for the activity feed.
+///
+/// Maintains a ring buffer of max 200 activity items.
+/// Activities are recorded when documents are indexed, moved, searched, etc.
+pub struct ActivityLog {
+    items: Vec<crate::types::ActivityItem>,
+    next_id: u64,
+}
+
+impl ActivityLog {
+    pub fn new() -> Self {
+        Self {
+            items: Vec::new(),
+            next_id: 1,
+        }
+    }
+
+    /// Record an activity event.
+    ///
+    /// `action`: "indexed", "moved", "tagged", "searched"
+    /// `subject`: human-readable description (e.g., "report.pdf", "query: tax docs")
+    pub fn record(&mut self, action: &str, subject: &str) {
+        let item = crate::types::ActivityItem {
+            id: format!("act-{}", self.next_id),
+            action: action.to_string(),
+            subject: subject.to_string(),
+            timestamp: chrono_now_iso(),
+        };
+        self.next_id += 1;
+        self.items.push(item);
+
+        // Ring buffer: cap at 200
+        if self.items.len() > 200 {
+            self.items.remove(0);
+        }
+    }
+
+    /// Get the last `limit` activity items, most recent first.
+    pub fn recent(&self, limit: usize) -> Vec<crate::types::ActivityItem> {
+        self.items
+            .iter()
+            .rev()
+            .take(limit)
+            .cloned()
+            .collect()
+    }
+
+    /// Get the total number of recorded activities.
+    pub fn len(&self) -> usize {
+        self.items.len()
+    }
+
+    /// Check if the activity log is empty.
+    pub fn is_empty(&self) -> bool {
+        self.items.is_empty()
+    }
+}
+
+impl Default for ActivityLog {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 /// Generate ISO 8601 timestamp.
 fn chrono_now_iso() -> String {
     let dur = std::time::SystemTime::now()
@@ -193,5 +257,60 @@ mod tests {
         assert_eq!(analytics.total_searches, 0);
         assert!(analytics.top_queries.is_empty());
         assert_eq!(analytics.avg_results_per_query, 0.0);
+    }
+
+    #[test]
+    fn test_activity_log_new() {
+        let log = ActivityLog::new();
+        assert!(log.is_empty());
+        assert_eq!(log.len(), 0);
+    }
+
+    #[test]
+    fn test_activity_log_record() {
+        let mut log = ActivityLog::new();
+        log.record("indexed", "report.pdf");
+        assert_eq!(log.len(), 1);
+
+        let items = log.recent(10);
+        assert_eq!(items.len(), 1);
+        assert_eq!(items[0].action, "indexed");
+        assert_eq!(items[0].subject, "report.pdf");
+        assert_eq!(items[0].id, "act-1");
+    }
+
+    #[test]
+    fn test_activity_log_recent_order() {
+        let mut log = ActivityLog::new();
+        log.record("indexed", "first.pdf");
+        log.record("moved", "second.pdf");
+        log.record("searched", "query: tax");
+
+        let items = log.recent(10);
+        assert_eq!(items.len(), 3);
+        // Most recent first
+        assert_eq!(items[0].action, "searched");
+        assert_eq!(items[1].action, "moved");
+        assert_eq!(items[2].action, "indexed");
+    }
+
+    #[test]
+    fn test_activity_log_recent_limit() {
+        let mut log = ActivityLog::new();
+        for i in 0..10 {
+            log.record("indexed", &format!("doc-{}.pdf", i));
+        }
+        let items = log.recent(3);
+        assert_eq!(items.len(), 3);
+    }
+
+    #[test]
+    fn test_activity_log_ring_buffer() {
+        let mut log = ActivityLog::new();
+        for i in 0..210 {
+            log.record("indexed", &format!("doc-{}.pdf", i));
+        }
+        assert!(log.len() <= 200, "should cap at 200 items");
+        assert_eq!(log.len(), 200);
     }
 }

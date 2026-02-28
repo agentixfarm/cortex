@@ -75,6 +75,7 @@ pub async fn trigger_scan(
     let embedding_service = state.embedding_service.clone();
     let indexer = state.indexer.clone();
     let registry = state.registry.clone();
+    let activity_log = state.activity_log.clone();
     let fid = folder_id.clone();
 
     // Spawn background scan task — returns immediately, progress via events
@@ -117,12 +118,20 @@ pub async fn trigger_scan(
                 match result {
                     Ok(Ok(doc_id)) => {
                         let _ = app_handle.emit("index-progress", IndexProgress {
-                            file_path: path_str,
+                            file_path: path_str.clone(),
                             status: "indexed".to_string(),
                             doc_id: Some(doc_id),
                             error: None,
                             folder_id: Some(fid.clone()),
                         });
+                        // Record activity
+                        if let Ok(mut log) = activity_log.lock() {
+                            let file_name = std::path::Path::new(&path_str)
+                                .file_name()
+                                .and_then(|n| n.to_str())
+                                .unwrap_or(&path_str);
+                            log.record("indexed", file_name);
+                        }
                     }
                     Ok(Err(e)) => {
                         let _ = app_handle.emit("index-progress", IndexProgress {

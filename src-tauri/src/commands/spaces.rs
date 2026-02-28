@@ -68,12 +68,27 @@ pub async fn move_document_to_space(
     state: State<'_, AppState>,
 ) -> Result<(), AppError> {
     let space_mgr = state.space_manager.clone();
+    let activity_log = state.activity_log.clone();
 
     tokio::task::spawn_blocking(move || {
         let mut guard = space_mgr
             .lock()
             .map_err(|e| AppError::Internal(e.to_string()))?;
-        guard.move_document(&doc_id, &space_id)
+
+        // Get target space name for activity log before moving
+        let space_name = guard
+            .get_space_data(&space_id)
+            .map(|sd| sd.space.name.clone())
+            .unwrap_or_else(|| space_id.clone());
+
+        guard.move_document(&doc_id, &space_id)?;
+
+        // Record activity
+        if let Ok(mut log) = activity_log.lock() {
+            log.record("moved", &format!("{} -> {}", doc_id, space_name));
+        }
+
+        Ok::<(), AppError>(())
     })
     .await??;
     Ok(())

@@ -47,6 +47,7 @@ pub async fn search_documents(
     let embedding_service = state.embedding_service.clone();
     let search_tracker = state.search_tracker.clone();
     let search_learner = state.search_learner.clone();
+    let activity_log = state.activity_log.clone();
     let query_owned = query.clone();
     let filters_owned = filters.clone();
 
@@ -62,6 +63,11 @@ pub async fn search_documents(
         // Record search in analytics tracker
         if let Ok(mut tracker) = search_tracker.lock() {
             tracker.record_query(&query_owned, results.len());
+        }
+
+        // Record search activity
+        if let Ok(mut log) = activity_log.lock() {
+            log.record("searched", &format!("query: {}", &query_owned));
         }
 
         // Record search trajectory in SONA learner
@@ -104,30 +110,34 @@ pub async fn get_document(
     id: String,
     state: State<'_, AppState>,
 ) -> Result<Document, AppError> {
-    let _engine = state.engine.clone();
+    let engine = state.engine.clone();
+
     let result = tokio::task::spawn_blocking(move || {
-        // Phase 3 will look up the real document from RuVector
-        Ok::<Document, AppError>(Document {
-            id: id.clone(),
-            name: "Sample Document.pdf".to_string(),
-            path: format!("~/Documents/{}.pdf", id),
-            doc_type: "pdf".to_string(),
-            size: 204800,
-            created_at: "2026-01-15T10:30:00Z".to_string(),
-            modified_at: "2026-02-01T14:22:00Z".to_string(),
-            excerpt: Some("This is a sample document excerpt for stub data.".to_string()),
-            space_ids: vec!["space-work".to_string()],
-            tags: vec!["document".to_string(), "sample".to_string()],
-            is_favorite: false,
-            extracted_entities: vec![
-                ExtractedEntity {
-                    label: "Date".to_string(),
-                    value: "2026-01-15".to_string(),
-                    entity_type: "date".to_string(),
-                },
-            ],
-            thumbnail_color: Some("#6D28D9".to_string()),
-        })
+        let engine_guard = engine.blocking_lock();
+        let collection_arc = engine_guard
+            .collections
+            .get_collection("documents_384")
+            .ok_or_else(|| {
+                AppError::VectorStorage("documents_384 collection not found".to_string())
+            })?;
+
+        let collection = collection_arc.read();
+        let entry = collection
+            .db
+            .get(&id)
+            .map_err(|e| AppError::VectorStorage(e.to_string()))?;
+
+        match entry {
+            Some(entry) => {
+                let metadata = entry.metadata.as_ref().ok_or_else(|| {
+                    AppError::Internal(format!("Document {} has no metadata", id))
+                })?;
+                Ok::<Document, AppError>(
+                    crate::search::query::build_document_from_metadata(&id, metadata),
+                )
+            }
+            None => Err(AppError::NotFound(format!("Document {} not found", id))),
+        }
     })
     .await??;
     Ok(result)
@@ -159,11 +169,46 @@ pub async fn toggle_favorite(
     id: String,
     state: State<'_, AppState>,
 ) -> Result<bool, AppError> {
-    let _engine = state.engine.clone();
-    let _id = id;
+    let engine = state.engine.clone();
+
     let result = tokio::task::spawn_blocking(move || {
-        // Phase 4 will persist the favorite flag in RuVector metadata
-        Ok::<bool, AppError>(true)
+        let engine_guard = engine.blocking_lock();
+        let collection_arc = engine_guard
+            .collections
+            .get_collection("documents_384")
+            .ok_or_else(|| {
+                AppError::VectorStorage("documents_384 collection not found".to_string())
+            })?;
+
+        let collection = collection_arc.read();
+        let entry = collection
+            .db
+            .get(&id)
+            .map_err(|e| AppError::VectorStorage(e.to_string()))?;
+
+        match entry {
+            Some(mut entry) => {
+                let metadata = entry.metadata.get_or_insert_with(std::collections::HashMap::new);
+                let current = metadata
+                    .get("is_favorite")
+                    .and_then(|v| v.as_bool())
+                    .unwrap_or(false);
+                let new_value = !current;
+                metadata.insert(
+                    "is_favorite".to_string(),
+                    serde_json::Value::Bool(new_value),
+                );
+
+                // Re-insert updated entry (upsert)
+                collection
+                    .db
+                    .insert(entry)
+                    .map_err(|e| AppError::VectorStorage(e.to_string()))?;
+
+                Ok::<bool, AppError>(new_value)
+            }
+            None => Err(AppError::NotFound(format!("Document {} not found", id))),
+        }
     })
     .await??;
     Ok(result)

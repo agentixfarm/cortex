@@ -19,7 +19,7 @@ use engine::CortexEngine;
 use pipeline::embedder::EmbeddingService;
 use pipeline::indexer::DocumentIndexer;
 use graph::edges::DocumentGraph;
-use intelligence::analytics::SearchTracker;
+use intelligence::analytics::{ActivityLog, SearchTracker};
 use intelligence::sona_bridge::SearchLearner;
 use spaces::manager::SpaceManager;
 use watcher::registry::WatcherRegistry;
@@ -57,18 +57,6 @@ pub fn run() {
 
             let engine_arc = Arc::new(Mutex::new(engine));
 
-            // Spawn persistent watcher background task
-            let app_handle = app.handle().clone();
-            watcher::worker::spawn_watcher_task(
-                app_handle,
-                engine_arc.clone(),
-                embedding_service.clone(),
-                indexer.clone(),
-                registry.clone(),
-                registry_path.clone(),
-                watcher_rx,
-            );
-
             // Create SpaceManager for Smart Spaces
             let space_manager = Arc::new(std::sync::Mutex::new(SpaceManager::new()));
 
@@ -80,6 +68,22 @@ pub fn run() {
 
             // Create SearchTracker for analytics
             let search_tracker = Arc::new(std::sync::Mutex::new(SearchTracker::new()));
+
+            // Create ActivityLog for activity feed
+            let activity_log = Arc::new(std::sync::Mutex::new(ActivityLog::new()));
+
+            // Spawn persistent watcher background task
+            let app_handle = app.handle().clone();
+            watcher::worker::spawn_watcher_task(
+                app_handle,
+                engine_arc.clone(),
+                embedding_service.clone(),
+                indexer.clone(),
+                registry.clone(),
+                registry_path.clone(),
+                watcher_rx,
+                activity_log.clone(),
+            );
 
             app.manage(AppState {
                 engine: engine_arc,
@@ -93,6 +97,7 @@ pub fn run() {
                 doc_graph,
                 search_learner,
                 search_tracker,
+                activity_log,
             });
 
             Ok(())

@@ -6,7 +6,7 @@ use crate::engine::CortexEngine;
 use crate::pipeline::embedder::EmbeddingService;
 use crate::pipeline::indexer::DocumentIndexer;
 use crate::graph::edges::DocumentGraph;
-use crate::intelligence::analytics::SearchTracker;
+use crate::intelligence::analytics::{ActivityLog, SearchTracker};
 use crate::intelligence::sona_bridge::SearchLearner;
 use crate::spaces::manager::SpaceManager;
 use crate::watcher::registry::WatcherRegistry;
@@ -54,4 +54,6 @@ pub struct AppState {
     pub search_learner: Arc<std::sync::Mutex<SearchLearner>>,
     /// Search analytics tracker for query history and click-through data.
     pub search_tracker: Arc<std::sync::Mutex<SearchTracker>>,
+    /// Activity log for the activity feed (indexed, moved, searched events).
+    pub activity_log: Arc<std::sync::Mutex<ActivityLog>>,
 }
