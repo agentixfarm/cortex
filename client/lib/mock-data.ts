@@ -41,6 +41,8 @@ export const mockSpaces: Space[] = [
         documentCount: 34,
         lastUpdated: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
         parentId: "space-property",
+        subSpaces: [],
+        sampleFiles: [],
       },
       {
         id: "space-property-insurance",
@@ -50,6 +52,8 @@ export const mockSpaces: Space[] = [
         documentCount: 18,
         lastUpdated: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
         parentId: "space-property",
+        subSpaces: [],
+        sampleFiles: [],
       },
     ],
   },
@@ -61,6 +65,7 @@ export const mockSpaces: Space[] = [
     documentCount: 341,
     lastUpdated: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
     sampleFiles: ["School_Report.pdf", "Medical_Record.pdf"],
+    subSpaces: [],
   },
   {
     id: "space-work",
@@ -70,6 +75,7 @@ export const mockSpaces: Space[] = [
     documentCount: 1560,
     lastUpdated: new Date(Date.now() - 30 * 60 * 1000).toISOString(),
     sampleFiles: ["Q4_Report.xlsx", "Project_Plan.docx"],
+    subSpaces: [],
   },
   {
     id: "space-invoices",
@@ -79,6 +85,7 @@ export const mockSpaces: Space[] = [
     documentCount: 213,
     lastUpdated: new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString(),
     sampleFiles: ["Invoice_Feb2026.pdf"],
+    subSpaces: [],
   },
   {
     id: "space-medical",
@@ -88,6 +95,7 @@ export const mockSpaces: Space[] = [
     documentCount: 87,
     lastUpdated: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString(),
     sampleFiles: ["Lab_Results_2025.pdf"],
+    subSpaces: [],
   },
 ];
 
@@ -96,7 +104,7 @@ export const mockDocuments: Document[] = [
     id: "doc-1",
     name: "Property_Tax_2025.pdf",
     path: "/Users/demo/Documents/Property/Property_Tax_2025.pdf",
-    type: "pdf",
+    docType: "pdf",
     size: 2_048_576,
     createdAt: "2025-02-15T00:00:00Z",
     modifiedAt: "2025-02-15T00:00:00Z",
@@ -105,8 +113,8 @@ export const mockDocuments: Document[] = [
     tags: ["tax", "property", "2025"],
     isFavorite: false,
     extractedEntities: [
-      { label: "Year", value: "2025", type: "date" },
-      { label: "Amount", value: "$4,200.00", type: "amount" },
+      { label: "Year", value: "2025", entityType: "date" },
+      { label: "Amount", value: "$4,200.00", entityType: "amount" },
     ],
     thumbnailColor: "#8B5CF6",
   },
@@ -114,21 +122,22 @@ export const mockDocuments: Document[] = [
     id: "doc-2",
     name: "Home_Insurance.pdf",
     path: "/Users/demo/Documents/Property/Home_Insurance.pdf",
-    type: "pdf",
+    docType: "pdf",
     size: 1_572_864,
     createdAt: "2025-01-03T00:00:00Z",
     modifiedAt: "2025-01-03T00:00:00Z",
-    excerpt: "Homeowners Insurance Policy — Coverage Summary...",
+    excerpt: "Homeowners Insurance Policy -- Coverage Summary...",
     spaceIds: ["space-property", "space-property-insurance"],
     tags: ["insurance", "property"],
     isFavorite: true,
+    extractedEntities: [],
     thumbnailColor: "#7C3AED",
   },
   {
     id: "doc-3",
     name: "School_Report.pdf",
     path: "/Users/demo/Documents/Kids/School_Report.pdf",
-    type: "pdf",
+    docType: "pdf",
     size: 524_288,
     createdAt: "2026-02-10T00:00:00Z",
     modifiedAt: "2026-02-10T00:00:00Z",
@@ -136,13 +145,14 @@ export const mockDocuments: Document[] = [
     spaceIds: ["space-kids"],
     tags: ["school", "kids"],
     isFavorite: false,
+    extractedEntities: [],
     thumbnailColor: "#10B981",
   },
   {
     id: "doc-4",
     name: "Invoice_Feb2026.pdf",
     path: "/Users/demo/Documents/Invoices/Invoice_Feb2026.pdf",
-    type: "pdf",
+    docType: "pdf",
     size: 348_160,
     createdAt: "2026-02-20T00:00:00Z",
     modifiedAt: "2026-02-20T00:00:00Z",
@@ -151,22 +161,22 @@ export const mockDocuments: Document[] = [
     tags: ["invoice", "2026"],
     isFavorite: false,
     extractedEntities: [
-      { label: "Amount", value: "$1,500.00", type: "amount" },
-      { label: "Date", value: "Feb 20, 2026", type: "date" },
+      { label: "Amount", value: "$1,500.00", entityType: "amount" },
+      { label: "Date", value: "Feb 20, 2026", entityType: "date" },
     ],
     thumbnailColor: "#F59E0B",
   },
 ];
 
 export const mockTags: Tag[] = [
-  { id: "tag-tax", name: "tax", color: "#8B5CF6", documentCount: 45, type: "auto" },
-  { id: "tag-property", name: "property", color: "#7C3AED", documentCount: 124, type: "auto" },
-  { id: "tag-2025", name: "2025", color: "#6D28D9", documentCount: 234, type: "auto" },
-  { id: "tag-invoice", name: "invoice", color: "#F59E0B", documentCount: 213, type: "auto" },
-  { id: "tag-insurance", name: "insurance", color: "#3B82F6", documentCount: 18, type: "auto" },
-  { id: "tag-school", name: "school", color: "#10B981", documentCount: 34, type: "user" },
-  { id: "tag-kids", name: "kids", color: "#14B8A6", documentCount: 87, type: "user" },
-  { id: "tag-medical", name: "medical", color: "#EF4444", documentCount: 87, type: "auto" },
+  { id: "tag-tax", name: "tax", color: "#8B5CF6", documentCount: 45, tagType: "auto" },
+  { id: "tag-property", name: "property", color: "#7C3AED", documentCount: 124, tagType: "auto" },
+  { id: "tag-2025", name: "2025", color: "#6D28D9", documentCount: 234, tagType: "auto" },
+  { id: "tag-invoice", name: "invoice", color: "#F59E0B", documentCount: 213, tagType: "auto" },
+  { id: "tag-insurance", name: "insurance", color: "#3B82F6", documentCount: 18, tagType: "auto" },
+  { id: "tag-school", name: "school", color: "#10B981", documentCount: 34, tagType: "user" },
+  { id: "tag-kids", name: "kids", color: "#14B8A6", documentCount: 87, tagType: "user" },
+  { id: "tag-medical", name: "medical", color: "#EF4444", documentCount: 87, tagType: "auto" },
 ];
 
 export const mockWatchedFolders: WatchedFolder[] = [
@@ -196,7 +206,7 @@ export const mockWatchedFolders: WatchedFolder[] = [
 export const mockSearchResults: SearchResult[] = mockDocuments.map((doc, i) => ({
   document: doc,
   score: 0.95 - i * 0.1,
-  highlights: [doc.excerpt ?? ""],
+  matchedExcerpt: doc.excerpt ?? "",
 }));
 
 export const mockSpaceGraph: SpaceGraph = {
@@ -214,53 +224,55 @@ export const mockSpaceGraph: SpaceGraph = {
 };
 
 export const mockSearchAnalytics: SearchAnalytics = {
+  totalSearches: 142,
   topQueries: [
     { query: "property tax 2025", count: 12 },
     { query: "invoice February", count: 8 },
     { query: "school report spring", count: 5 },
     { query: "medical records", count: 4 },
   ],
-  queriesThisWeek: 34,
   avgResultsPerQuery: 8.5,
+  queriesThisWeek: 34,
 };
 
 export const mockActivityItems: ActivityItem[] = [
   {
     id: "activity-1",
-    action: "3 new documents added today",
+    action: "indexed",
+    subject: "3 new documents added today",
     type: "info",
     timestamp: new Date(Date.now() - 30 * 60 * 1000).toISOString(),
   },
   {
     id: "activity-2",
-    action: '"Tax 2025" space updated',
+    action: "moved",
+    subject: '"Tax 2025" space updated',
     type: "info",
     timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
   },
   {
     id: "activity-3",
-    action: "12 documents re-categorized",
+    action: "moved",
+    subject: "12 documents re-categorized",
     type: "success",
     timestamp: new Date(Date.now() - 4 * 60 * 60 * 1000).toISOString(),
   },
   {
     id: "activity-4",
-    action: "Scan completed: ~/Documents",
+    action: "indexed",
+    subject: "Scan completed: ~/Documents",
     type: "success",
     timestamp: new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString(),
   },
 ];
 
 export const defaultSettings: Settings = {
-  indexingEnabled: true,
-  watchedPaths: ["/Users/demo/Documents", "/Users/demo/Desktop", "/Users/demo/Downloads"],
+  theme: "dark",
+  sidebarCollapsed: false,
   embeddingModel: "local",
-  embeddingModelName: "all-MiniLM-L6-v2",
-  maxDocumentSizeMb: 100,
-  supportedExtensions: ["pdf", "docx", "txt", "md", "xlsx", "csv", "png", "jpg"],
-  clusteringEnabled: true,
-  clusteringThreshold: 0.75,
-  privacyMode: false,
-  telemetryEnabled: false,
-  storageQuotaGb: 10,
+  watchedFolders: ["/Users/demo/Documents", "/Users/demo/Desktop", "/Users/demo/Downloads"],
+  excludedPatterns: [".git", "node_modules", ".DS_Store"],
+  indexOnStartup: true,
+  indexSize: 0,
+  storagePath: "~/Library/Application Support/com.cortex.app/vectors",
 };

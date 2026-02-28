@@ -40,7 +40,7 @@ import type {
   DocumentMeta,
 } from "../lib/types";
 
-// ─── Query Keys ──────────────────────────────────────────────────────────────
+// --- Query Keys ---------------------------------------------------------------
 
 export const queryKeys = {
   spaces: ["spaces"] as const,
@@ -59,7 +59,7 @@ export const queryKeys = {
   settings: ["settings"] as const,
 };
 
-// ─── Space Hooks ─────────────────────────────────────────────────────────────
+// --- Space Hooks --------------------------------------------------------------
 
 /**
  * Fetches all Smart Spaces (auto-organized virtual folders).
@@ -127,7 +127,7 @@ export function useMoveDocumentToSpace() {
   });
 }
 
-// ─── Document Hooks ───────────────────────────────────────────────────────────
+// --- Document Hooks -----------------------------------------------------------
 
 /**
  * Fetches a single document by ID.
@@ -172,7 +172,7 @@ export function useIndexDocument() {
         id: `doc-${Date.now()}`,
         name: path.split("/").pop() ?? "unknown",
         path,
-        type: "other" as const,
+        docType: "other",
         size: 0,
         createdAt: new Date().toISOString(),
         modifiedAt: new Date().toISOString(),
@@ -200,7 +200,7 @@ export function useToggleFavorite() {
   });
 }
 
-// ─── Search Hooks ─────────────────────────────────────────────────────────────
+// --- Search Hooks -------------------------------------------------------------
 
 /**
  * Searches documents using semantic similarity.
@@ -233,7 +233,7 @@ export function useSearchAnalytics() {
   });
 }
 
-// ─── Stats & Activity Hooks ──────────────────────────────────────────────────
+// --- Stats & Activity Hooks ---------------------------------------------------
 
 /**
  * Fetches high-level document and space statistics.
@@ -258,7 +258,7 @@ export function useActivityFeed() {
   });
 }
 
-// ─── Watched Folder Hooks ────────────────────────────────────────────────────
+// --- Watched Folder Hooks -----------------------------------------------------
 
 /**
  * Fetches the list of watched folders.
@@ -286,7 +286,7 @@ export function useAddWatchedFolder() {
           path,
           documentCount: 0,
           lastScan: new Date().toISOString(),
-          status: "watching" as const,
+          status: "watching",
         }),
       ),
     onSuccess: () => {
@@ -321,9 +321,9 @@ export function useTriggerScan() {
         { folderId },
         () => ({
           folderId,
-          total: 100,
-          processed: 100,
-          status: "complete" as const,
+          totalFiles: 100,
+          processedFiles: 100,
+          status: "complete",
         }),
       ),
     onSuccess: () => {
@@ -334,7 +334,7 @@ export function useTriggerScan() {
   });
 }
 
-// ─── Tag Hooks ────────────────────────────────────────────────────────────────
+// --- Tag Hooks ----------------------------------------------------------------
 
 /**
  * Fetches all document tags (auto-generated + user-created).
@@ -346,7 +346,7 @@ export function useTags() {
   });
 }
 
-// ─── Settings Hooks ───────────────────────────────────────────────────────────
+// --- Settings Hooks -----------------------------------------------------------
 
 /**
  * Fetches the current application settings.

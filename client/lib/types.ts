@@ -1,13 +1,16 @@
 /**
  * Cortex shared data types used across frontend hooks and components.
  * These mirror the Rust backend types returned by IPC commands.
+ *
+ * Field names match the exact camelCase JSON produced by Rust serde
+ * with #[serde(rename_all = "camelCase")].
  */
 
 export interface Document {
   id: string;
   name: string;
   path: string;
-  type: "pdf" | "docx" | "txt" | "png" | "jpg" | "xlsx" | "csv" | "md" | "other";
+  docType: string; // "pdf", "docx", "txt", "png", "jpg", "xlsx", "csv", "md", "other"
   size: number;
   createdAt: string; // ISO date string
   modifiedAt: string; // ISO date string
@@ -15,12 +18,36 @@ export interface Document {
   spaceIds: string[];
   tags: string[];
   isFavorite: boolean;
-  extractedEntities?: Array<{
+  extractedEntities: Array<{
     label: string;
     value: string;
-    type: "date" | "amount" | "person" | "organization" | "location";
+    entityType: string; // "date", "amount", "person", "organization", "location"
   }>;
   thumbnailColor?: string;
+}
+
+export interface DocumentMeta {
+  id: string;
+  name: string;
+  path: string;
+  docType: string;
+  size: number;
+  createdAt: string; // ISO date string
+  modifiedAt: string; // ISO date string
+}
+
+export interface SearchFilters {
+  docType?: string;
+  spaceId?: string;
+  dateFrom?: string; // ISO date string
+  dateTo?: string; // ISO date string
+  tags?: string[];
+}
+
+export interface SearchResult {
+  document: Document;
+  score: number;
+  matchedExcerpt?: string;
 }
 
 export interface Space {
@@ -30,17 +57,9 @@ export interface Space {
   color: string; // Hex color for accent
   documentCount: number;
   lastUpdated: string; // ISO date string
-  subSpaces?: Space[];
+  subSpaces: Space[];
   parentId?: string;
-  sampleFiles?: string[];
-}
-
-export interface Tag {
-  id: string;
-  name: string;
-  color: string;
-  documentCount: number;
-  type: "auto" | "user"; // auto = AI-generated, user = manually created
+  sampleFiles: string[];
 }
 
 export interface WatchedFolder {
@@ -48,7 +67,14 @@ export interface WatchedFolder {
   path: string;
   documentCount: number;
   lastScan: string; // ISO date string
-  status: "watching" | "paused" | "error";
+  status: string; // "watching", "paused", "error"
+}
+
+export interface ScanProgress {
+  folderId: string;
+  totalFiles: number;
+  processedFiles: number;
+  status: string; // "scanning", "complete", "error"
 }
 
 export interface Stats {
@@ -58,28 +84,12 @@ export interface Stats {
   indexSize: number; // bytes
 }
 
-export interface SearchFilters {
-  spaceIds?: string[];
-  tags?: string[];
-  types?: Document["type"][];
-  dateRange?: {
-    from?: string; // ISO date string
-    to?: string; // ISO date string
-  };
-}
-
-export interface SearchResult {
-  document: Document;
-  score: number;
-  highlights?: string[];
-}
-
 export interface SpaceGraph {
   nodes: Array<{
     id: string;
     name: string;
-    documentCount: number;
     color: string;
+    documentCount: number;
   }>;
   edges: Array<{
     source: string;
@@ -88,52 +98,42 @@ export interface SpaceGraph {
   }>;
 }
 
-export interface SearchAnalytics {
-  topQueries: Array<{
-    query: string;
-    count: number;
-  }>;
-  queriesThisWeek: number;
-  avgResultsPerQuery: number;
+export interface TopQuery {
+  query: string;
+  count: number;
 }
 
-export interface ScanProgress {
-  folderId: string;
-  total: number;
-  processed: number;
-  status: "scanning" | "complete" | "error";
+export interface SearchAnalytics {
+  totalSearches: number;
+  topQueries: TopQuery[];
+  avgResultsPerQuery: number;
+  queriesThisWeek: number;
+}
+
+export interface Settings {
+  theme: string; // "dark", "light", "system"
+  sidebarCollapsed: boolean;
+  embeddingModel: string; // "local", "openai"
+  watchedFolders: string[];
+  excludedPatterns: string[];
+  indexOnStartup: boolean;
+  indexSize: number; // bytes
+  storagePath: string;
+}
+
+export interface Tag {
+  id: string;
+  name: string;
+  color: string;
+  documentCount: number;
+  tagType: string; // "auto", "user"
 }
 
 export interface ActivityItem {
   id: string;
-  action: string;
-  type: "info" | "success" | "warning" | "error";
+  action: string; // "indexed", "moved", "tagged", "searched"
+  subject: string;
   timestamp: string; // ISO date string
+  type: string; // "info", "success", "warning", "error"
   documentId?: string;
-}
-
-export interface Settings {
-  indexingEnabled: boolean;
-  watchedPaths: string[];
-  embeddingModel: "local" | "openai" | "ollama";
-  embeddingModelName: string;
-  apiKey?: string;
-  ollamaEndpoint?: string;
-  maxDocumentSizeMb: number;
-  supportedExtensions: string[];
-  clusteringEnabled: boolean;
-  clusteringThreshold: number;
-  privacyMode: boolean;
-  telemetryEnabled: boolean;
-  storageQuotaGb: number;
-}
-
-export interface DocumentMeta {
-  id: string;
-  name: string;
-  path: string;
-  type: Document["type"];
-  size: number;
-  createdAt: string;
-  modifiedAt: string;
 }
