@@ -10,6 +10,8 @@ import { AppShell } from "./components/layout/AppShell";
 import Index from "./pages/Index";
 import Placeholder from "./pages/Placeholder";
 import SpacesPage from "./pages/SpacesPage";
+import SpaceDetailPage from "./pages/SpaceDetailPage";
+import InsightsPage from "./pages/InsightsPage";
 import NotFound from "./pages/NotFound";
 import { ThemeProvider } from "next-themes";
 
@@ -26,13 +28,13 @@ const App = () => (
             <Route element={<AppShell />}>
               <Route path="/" element={<Index />} />
               <Route path="/spaces" element={<SpacesPage />} />
-              <Route path="/spaces/:id" element={<Placeholder />} />
+              <Route path="/spaces/:id" element={<SpaceDetailPage />} />
               <Route path="/search" element={<Placeholder />} />
               <Route path="/recent" element={<Placeholder />} />
               <Route path="/favorites" element={<Placeholder />} />
               <Route path="/tags" element={<Placeholder />} />
               <Route path="/watched" element={<Placeholder />} />
-              <Route path="/insights" element={<Placeholder />} />
+              <Route path="/insights" element={<InsightsPage />} />
               <Route path="/settings" element={<Placeholder />} />
               <Route path="/onboarding" element={<Placeholder />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
