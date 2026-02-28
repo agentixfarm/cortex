@@ -2,13 +2,13 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: unknown
-last_updated: "2026-02-28T13:43:06.548Z"
+status: executing
+last_updated: "2026-02-28T13:59:00.000Z"
 progress:
-  total_phases: 3
+  total_phases: 4
   completed_phases: 3
-  total_plans: 15
-  completed_plans: 15
+  total_plans: 21
+  completed_plans: 16
 ---
 
 # Project State
@@ -18,21 +18,21 @@ progress:
 See: .planning/PROJECT.md (updated 2026-02-27)
 
 **Core value:** Documents sort themselves into meaningful spaces through AI-powered clustering; users find anything with natural language search -- all running locally.
-**Current focus:** Phase 3 -- Search Intelligence and Smart Spaces -- Complete
+**Current focus:** Phase 4 -- Frontend Integration and UX -- Planning complete, ready for execution
 
 ## Current Position
 
-Phase: 3 of 4 (Search Intelligence and Smart Spaces) -- Complete
-Plan: 5 of 5 complete
-Status: Phase 3 complete -- all search, spaces, graph, intelligence, and integration components done
-Last activity: 2026-02-28 -- Completed Plan 05 (final integration: all stubs replaced, ActivityLog, domain expansion)
+Phase: 4 of 4 (Frontend Integration and UX) -- Executing
+Plan: 1 of 6 complete
+Status: Plan 04-01 (type alignment) complete. Wave 2 (04-02/03/04/05) ready.
+Last activity: 2026-02-28 -- Plan 04-01 executed: serde camelCase on all Rust IPC types, TS types aligned, mock data updated
 
-Progress: [███████████████] 75%
+Progress: [████████████████░░░░] 76%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 15
+- Total plans completed: 16
 - Total execution time: ~2 hours
 
 **By Phase:**
@@ -42,6 +42,7 @@ Progress: [███████████████] 75%
 | 01-tauri-foundation | 5/5 | Complete |
 | 02-document-pipeline-and-file-watching | 5/5 | Complete |
 | 03-search-intelligence-and-smart-spaces | 5/5 | Complete |
+| 04-frontend-integration-and-ux | 1/6 | In Progress |
 
 **Test Counts:**
 | Phase | Tests Added | Total |
@@ -88,6 +89,10 @@ Recent decisions affecting current work:
 - [Phase 03-04]: Reranker blends 0.7*cosine + 0.3*attention -- conservative blend for v1
 - [Phase 03-05]: ActivityLog capped at 200 items; Domain expansion uses 0.6 similarity threshold for bootstrap
 - [Phase 03-05]: Search-as-you-type: backend handles via min query length; frontend adds 150ms debounce in Phase 4
+- [Phase 04-01]: serde rename_all=camelCase on all 16 IPC structs; Rust types.rs is source of truth, TS types.ts mirrors exactly
+- [Phase 04-01]: ActivityItem uses #[serde(rename="type")] on activity_type field to avoid Rust keyword collision
+- [Phase 04-01]: TopQuery as separate struct for structured search analytics (query + count)
+- [Phase 04-01]: Space subSpaces/sampleFiles required arrays (not optional) matching Rust Vec
 
 ### Pending Todos
 
@@ -95,11 +100,18 @@ None yet.
 
 ### Blockers/Concerns
 
-- Phase 4 needs: React Query hooks wired to Tauri IPC, command palette, onboarding wizard, system tray
-- TypeScript typecheck passes cleanly with React 19 + TailwindCSS 4
+- Phase 4 planned with 6 plans across 3 waves
+- [RESOLVED by 04-01] Rust serde now uses camelCase JSON via rename_all
+- Missing backend commands: get_recent_documents, get_favorite_documents (Plan 02 adds these)
+- [RESOLVED by 04-01] SearchAnalytics Rust type now matches TS type (TopQuery struct, queriesThisWeek)
+- [RESOLVED by 04-01] Settings types aligned between Rust and TS
+- [RESOLVED by 04-01] ActivityItem now has type and documentId fields
+- System tray (UX-03) deferred to stretch goal — TopBar indexing indicator provides same visibility
+- zustand not in package.json but specified in CLAUDE.md — Plan 06 installs it
 
 ## Session Continuity
 
 Last session: 2026-02-28
-Stopped at: Phase 3 complete (all 5 plans done). Ready for Phase 4 planning.
-Resume file: None
+Stopped at: Completed 04-01-PLAN.md (type alignment). Wave 2 ready (04-02/03/04/05).
+Resume file: .planning/phases/04-frontend-integration-and-ux/04-02-PLAN.md
+Resume action: /gsd:execute-phase 4 -- will detect 1 SUMMARY, resume from Wave 2

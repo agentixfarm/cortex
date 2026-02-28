@@ -66,7 +66,13 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. Cmd+K command palette opens from any page and navigates to any route or executes any search
   4. Watched folders management page shows real folder status and lets user pause/remove/reconfigure folders
   5. Insights page renders donut chart, area chart, and space network graph from real indexed data
-**Plans**: TBD
+**Plans**:
+  - Plan 01 (Wave 1): Type alignment — serde camelCase on Rust, align TS types, update mock data
+  - Plan 02 (Wave 2): Dashboard + layout wiring — Index page, Sidebar, TopBar use live hooks; add missing backend commands
+  - Plan 03 (Wave 2): Core pages — Spaces grid, Space detail, Search (split-pane), Document detail
+  - Plan 04 (Wave 2): Secondary pages — Recent (timeline), Favorites, Tags (cloud+list), Watched Folders (management)
+  - Plan 05 (Wave 2): Analytics + Settings — Insights (4 chart types, network graph), Settings (6 tabs)
+  - Plan 06 (Wave 3): UX polish — Onboarding wizard, Cmd+K command palette, keyboard shortcuts, indexing indicator, final cleanup
 
 ## Progress
 
@@ -78,4 +84,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 | 1. Tauri Foundation | 5/5 | Complete   | 2026-02-27 |
 | 2. Document Pipeline and File Watching | 5/5 | Complete    | 2026-02-28 |
 | 3. Search Intelligence and Smart Spaces | 5/5 | Complete    | 2026-02-28 |
-| 4. Frontend Integration and UX | 0/TBD | Not started | - |
+| 4. Frontend Integration and UX | 1/6 | In Progress|  |
