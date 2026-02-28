@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Sidebar } from "./Sidebar";
 import { TopBar } from "./TopBar";
+import { CommandPalette } from "./CommandPalette";
 import { useOnboardingStore, useSidebarStore } from "@/lib/stores";
 import { useWatchedFolders } from "@/hooks/useTauri";
 import { cn } from "@/lib/utils";
@@ -27,6 +28,9 @@ export function AppShell() {
 
   return (
     <div className="h-screen bg-bg-primary">
+      {/* Command Palette overlay */}
+      <CommandPalette />
+
       {/* Sidebar - fixed positioned */}
       <Sidebar />
 
