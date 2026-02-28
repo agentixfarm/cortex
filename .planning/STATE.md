@@ -6,9 +6,9 @@ status: unknown
 last_updated: "2026-02-27T17:03:30.134Z"
 progress:
   total_phases: 2
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 10
-  completed_plans: 8
+  completed_plans: 10
 ---
 
 # Project State
@@ -22,12 +22,12 @@ See: .planning/PROJECT.md (updated 2026-02-27)
 
 ## Current Position
 
-Phase: 2 of 4 (Document Pipeline and File Watching) — In Progress
-Plan: 2 of 5 complete (Plan 02 done)
-Status: Phase 2 in progress — embedding service and entity extractor complete
-Last activity: 2026-02-27 — Completed Plan 02 (EmbeddingService fastembed wrapper, EntityExtractor regex)
+Phase: 2 of 4 (Document Pipeline and File Watching) — Complete
+Plan: 5 of 5 complete
+Status: Phase 2 complete — all pipeline components wired end-to-end
+Last activity: 2026-02-28 — Completed Plan 05 (integration wiring: watcher→indexer, IPC commands real)
 
-Progress: [██████░░░░] 38%
+Progress: [██████████] 50%
 
 ## Performance Metrics
 
@@ -97,6 +97,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-02-27
-Stopped at: Completed 02-04-PLAN.md (File watcher registry and worker) — Phase 2 Plan 4 complete
+Last session: 2026-02-28
+Stopped at: Phase 2 complete (all 5 plans done). Ready for Phase 3 planning.
 Resume file: None
