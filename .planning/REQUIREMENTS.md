@@ -73,16 +73,16 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Frontend Pages
 
 - [x] **PAGE-01**: Dashboard with real stats (sparklines, recent docs, top spaces, activity feed)
-- [ ] **PAGE-02**: Smart Spaces grid (auto-organized, grid/list toggle)
-- [ ] **PAGE-03**: Space detail (sub-spaces, document list, related spaces)
-- [ ] **PAGE-04**: Search page (split-pane: results + preview panel, filters)
+- [x] **PAGE-02**: Smart Spaces grid (auto-organized, grid/list toggle)
+- [x] **PAGE-03**: Space detail (sub-spaces, document list, related spaces)
+- [x] **PAGE-04**: Search page (split-pane: results + preview panel, filters)
 - [x] **PAGE-05**: Recent documents timeline (Today/Yesterday/This Week)
 - [x] **PAGE-06**: Favorites page (starred documents with sort)
 - [x] **PAGE-07**: Tag cloud page (auto-generated + user-created tags)
 - [x] **PAGE-08**: Watched folders management (add/remove/pause, file type toggles, exclusions)
-- [ ] **PAGE-09**: Insights/analytics (donut chart, area chart, bar chart, space network graph)
-- [ ] **PAGE-10**: Settings: General, Indexing, AI & Models, Privacy, Storage, About
-- [ ] **PAGE-11**: Document detail: preview (65%) + metadata sidebar (35%)
+- [x] **PAGE-09**: Insights/analytics (donut chart, area chart, bar chart, space network graph)
+- [x] **PAGE-10**: Settings: General, Indexing, AI & Models, Privacy, Storage, About
+- [x] **PAGE-11**: Document detail: preview (65%) + metadata sidebar (35%)
 - [ ] **PAGE-12**: Onboarding wizard (Welcome, Select Folders, Scanning, Spaces Ready)
 
 ### UX
@@ -175,16 +175,16 @@ Which phases cover which requirements. Updated during roadmap creation.
 | INTL-03 | Phase 3 | Pending |
 | INTL-04 | Phase 3 | Pending |
 | PAGE-01 | Phase 4 | Complete |
-| PAGE-02 | Phase 4 | Pending |
-| PAGE-03 | Phase 4 | Pending |
-| PAGE-04 | Phase 4 | Pending |
+| PAGE-02 | Phase 4 | Complete |
+| PAGE-03 | Phase 4 | Complete |
+| PAGE-04 | Phase 4 | Complete |
 | PAGE-05 | Phase 4 | Complete |
 | PAGE-06 | Phase 4 | Complete |
 | PAGE-07 | Phase 4 | Complete |
 | PAGE-08 | Phase 4 | Complete |
-| PAGE-09 | Phase 4 | Pending |
-| PAGE-10 | Phase 4 | Pending |
-| PAGE-11 | Phase 4 | Pending |
+| PAGE-09 | Phase 4 | Complete |
+| PAGE-10 | Phase 4 | Complete |
+| PAGE-11 | Phase 4 | Complete |
 | PAGE-12 | Phase 4 | Pending |
 | UX-01 | Phase 4 | Pending |
 | UX-02 | Phase 4 | Pending |
