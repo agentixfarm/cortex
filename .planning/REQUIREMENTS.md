@@ -72,7 +72,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Frontend Pages
 
-- [ ] **PAGE-01**: Dashboard with real stats (sparklines, recent docs, top spaces, activity feed)
+- [x] **PAGE-01**: Dashboard with real stats (sparklines, recent docs, top spaces, activity feed)
 - [ ] **PAGE-02**: Smart Spaces grid (auto-organized, grid/list toggle)
 - [ ] **PAGE-03**: Space detail (sub-spaces, document list, related spaces)
 - [ ] **PAGE-04**: Search page (split-pane: results + preview panel, filters)
@@ -174,7 +174,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | INTL-02 | Phase 3 | Pending |
 | INTL-03 | Phase 3 | Pending |
 | INTL-04 | Phase 3 | Pending |
-| PAGE-01 | Phase 4 | Pending |
+| PAGE-01 | Phase 4 | Complete |
 | PAGE-02 | Phase 4 | Pending |
 | PAGE-03 | Phase 4 | Pending |
 | PAGE-04 | Phase 4 | Pending |
