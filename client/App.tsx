@@ -9,6 +9,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AppShell } from "./components/layout/AppShell";
 import Index from "./pages/Index";
 import Placeholder from "./pages/Placeholder";
+import SpacesPage from "./pages/SpacesPage";
 import NotFound from "./pages/NotFound";
 import { ThemeProvider } from "next-themes";
 
@@ -24,7 +25,7 @@ const App = () => (
           <Routes>
             <Route element={<AppShell />}>
               <Route path="/" element={<Index />} />
-              <Route path="/spaces" element={<Placeholder />} />
+              <Route path="/spaces" element={<SpacesPage />} />
               <Route path="/spaces/:id" element={<Placeholder />} />
               <Route path="/search" element={<Placeholder />} />
               <Route path="/recent" element={<Placeholder />} />
