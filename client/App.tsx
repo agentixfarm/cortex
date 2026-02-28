@@ -11,6 +11,7 @@ import Index from "./pages/Index";
 import Placeholder from "./pages/Placeholder";
 import SpacesPage from "./pages/SpacesPage";
 import SpaceDetailPage from "./pages/SpaceDetailPage";
+import SearchPage from "./pages/SearchPage";
 import InsightsPage from "./pages/InsightsPage";
 import RecentPage from "./pages/RecentPage";
 import FavoritesPage from "./pages/FavoritesPage";
@@ -33,7 +34,7 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/spaces" element={<SpacesPage />} />
               <Route path="/spaces/:id" element={<SpaceDetailPage />} />
-              <Route path="/search" element={<Placeholder />} />
+              <Route path="/search" element={<SearchPage />} />
               <Route path="/recent" element={<RecentPage />} />
               <Route path="/favorites" element={<FavoritesPage />} />
               <Route path="/tags" element={<TagsPage />} />
