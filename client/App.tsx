@@ -8,7 +8,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AppShell } from "./components/layout/AppShell";
 import Index from "./pages/Index";
-import Placeholder from "./pages/Placeholder";
+import OnboardingPage from "./pages/OnboardingPage";
 import SpacesPage from "./pages/SpacesPage";
 import SpaceDetailPage from "./pages/SpaceDetailPage";
 import SearchPage from "./pages/SearchPage";
@@ -44,7 +44,7 @@ const App = () => (
               <Route path="/insights" element={<InsightsPage />} />
               <Route path="/settings" element={<SettingsPage />} />
               <Route path="/document/:id" element={<DocumentPage />} />
-              <Route path="/onboarding" element={<Placeholder />} />
+              <Route path="/onboarding" element={<OnboardingPage />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             </Route>
             <Route path="*" element={<NotFound />} />
