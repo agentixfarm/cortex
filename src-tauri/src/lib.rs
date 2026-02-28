@@ -8,6 +8,7 @@ pub mod watcher;
 pub mod search;
 pub mod spaces;
 pub mod graph;
+pub mod intelligence;
 
 use std::sync::Arc;
 use tokio::sync::Mutex;
@@ -18,6 +19,8 @@ use engine::CortexEngine;
 use pipeline::embedder::EmbeddingService;
 use pipeline::indexer::DocumentIndexer;
 use graph::edges::DocumentGraph;
+use intelligence::analytics::SearchTracker;
+use intelligence::sona_bridge::SearchLearner;
 use spaces::manager::SpaceManager;
 use watcher::registry::WatcherRegistry;
 
@@ -72,6 +75,12 @@ pub fn run() {
             // Create DocumentGraph for related documents
             let doc_graph = Arc::new(std::sync::Mutex::new(DocumentGraph::new()));
 
+            // Create SearchLearner (SONA self-learning, 384-dim)
+            let search_learner = Arc::new(std::sync::Mutex::new(SearchLearner::new(384)));
+
+            // Create SearchTracker for analytics
+            let search_tracker = Arc::new(std::sync::Mutex::new(SearchTracker::new()));
+
             app.manage(AppState {
                 engine: engine_arc,
                 watcher_tx,
@@ -82,6 +91,8 @@ pub fn run() {
                 registry_path,
                 space_manager,
                 doc_graph,
+                search_learner,
+                search_tracker,
             });
 
             Ok(())
@@ -93,6 +104,7 @@ pub fn run() {
             commands::documents::get_document,
             commands::documents::get_related_documents,
             commands::documents::toggle_favorite,
+            commands::documents::record_search_click,
             // spaces (4)
             commands::spaces::get_spaces,
             commands::spaces::get_space_documents,

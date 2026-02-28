@@ -45,17 +45,55 @@ pub async fn search_documents(
 ) -> Result<Vec<SearchResult>, AppError> {
     let engine = state.engine.clone();
     let embedding_service = state.embedding_service.clone();
+    let search_tracker = state.search_tracker.clone();
+    let search_learner = state.search_learner.clone();
     let query_owned = query.clone();
     let filters_owned = filters.clone();
 
     let results = tokio::task::spawn_blocking(move || {
         let engine_guard = engine.blocking_lock();
-        crate::search::query::search_documents_impl(
+        let mut results = crate::search::query::search_documents_impl(
             &query_owned,
             &filters_owned,
             &engine_guard,
             &embedding_service,
-        )
+        )?;
+
+        // Record search in analytics tracker
+        if let Ok(mut tracker) = search_tracker.lock() {
+            tracker.record_query(&query_owned, results.len());
+        }
+
+        // Record search trajectory in SONA learner
+        let scores: Vec<f32> = results.iter().map(|r| r.score as f32).collect();
+        if let Ok(query_vec) = embedding_service.embed_text(&query_owned) {
+            if let Ok(learner) = search_learner.lock() {
+                let _ = learner.record_search(&query_vec, &scores);
+            }
+
+            // Apply attention-based re-ranking if we have result vectors
+            if results.len() > 1 {
+                let collection_arc = engine_guard.collections.get_collection("documents_384");
+                if let Some(col) = collection_arc {
+                    let col = col.read();
+                    let result_vecs: Vec<Vec<f32>> = results
+                        .iter()
+                        .filter_map(|r| {
+                            col.db.get(&r.document.id).ok().flatten().map(|e| e.vector)
+                        })
+                        .collect();
+                    if result_vecs.len() == results.len() {
+                        crate::intelligence::reranker::rerank_results(
+                            &query_vec,
+                            &mut results,
+                            &result_vecs,
+                        );
+                    }
+                }
+            }
+        }
+
+        Ok::<Vec<SearchResult>, AppError>(results)
     })
     .await??;
     Ok(results)
@@ -129,6 +167,43 @@ pub async fn toggle_favorite(
     })
     .await??;
     Ok(result)
+}
+
+#[tauri::command]
+pub async fn record_search_click(
+    query: String,
+    doc_id: String,
+    position: usize,
+    state: State<'_, AppState>,
+) -> Result<(), AppError> {
+    let search_tracker = state.search_tracker.clone();
+    let search_learner = state.search_learner.clone();
+    let embedding_service = state.embedding_service.clone();
+    let engine = state.engine.clone();
+
+    tokio::task::spawn_blocking(move || {
+        // Record click in analytics tracker
+        if let Ok(mut tracker) = search_tracker.lock() {
+            tracker.record_click(position);
+        }
+
+        // Record click in SONA learner for feedback
+        if let Ok(query_vec) = embedding_service.embed_text(&query) {
+            let engine_guard = engine.blocking_lock();
+            if let Some(col) = engine_guard.collections.get_collection("documents_384") {
+                let col = col.read();
+                if let Ok(Some(entry)) = col.db.get(&doc_id) {
+                    if let Ok(learner) = search_learner.lock() {
+                        learner.record_click(&query_vec, &entry.vector, position);
+                    }
+                }
+            }
+        }
+
+        Ok::<(), AppError>(())
+    })
+    .await??;
+    Ok(())
 }
 
 fn detect_doc_type(path: &str) -> String {

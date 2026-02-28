@@ -29,6 +29,8 @@ thiserror = "1"
 ruvector-core = { path = "../../experiments/ruvector/crates/ruvector-core" }
 ruvector-collections = { path = "../../experiments/ruvector/crates/ruvector-collections" }
 ruvector-filter = { path = "../../experiments/ruvector/crates/ruvector-filter" }
+ruvector-sona = { path = "../../experiments/ruvector/crates/sona" }
+ruvector-attention = { path = "../../experiments/ruvector/crates/ruvector-attention", default-features = false }
 fastembed = "5"
 notify-debouncer-mini = "0.4"
 pdf-extract = "0.10"

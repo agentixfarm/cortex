@@ -45,14 +45,13 @@ pub async fn get_space_graph(
 pub async fn get_search_analytics(
     state: State<'_, AppState>,
 ) -> Result<SearchAnalytics, AppError> {
-    let _engine = state.engine.clone();
+    let tracker = state.search_tracker.clone();
+
     let result = tokio::task::spawn_blocking(move || {
-        // Phase 2 will aggregate query history from the SONA learning engine
-        Ok::<SearchAnalytics, AppError>(SearchAnalytics {
-            total_searches: 0,
-            top_queries: vec![],
-            avg_results_per_query: 0.0,
-        })
+        let tracker_guard = tracker
+            .lock()
+            .map_err(|e| AppError::Internal(e.to_string()))?;
+        Ok::<SearchAnalytics, AppError>(tracker_guard.get_analytics())
     })
     .await??;
     Ok(result)
