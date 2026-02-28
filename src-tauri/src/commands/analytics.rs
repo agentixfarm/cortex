@@ -25,13 +25,17 @@ pub async fn get_stats(
 pub async fn get_space_graph(
     state: State<'_, AppState>,
 ) -> Result<SpaceGraph, AppError> {
-    let _engine = state.engine.clone();
+    let graph = state.doc_graph.clone();
+    let space_mgr = state.space_manager.clone();
+
     let result = tokio::task::spawn_blocking(move || {
-        // Phase 2 will build the graph from ruvector-graph Cypher queries
-        Ok::<SpaceGraph, AppError>(SpaceGraph {
-            nodes: vec![],
-            edges: vec![],
-        })
+        let graph_guard = graph
+            .lock()
+            .map_err(|e| AppError::Internal(e.to_string()))?;
+        let space_guard = space_mgr
+            .lock()
+            .map_err(|e| AppError::Internal(e.to_string()))?;
+        Ok::<SpaceGraph, AppError>(graph_guard.build_space_graph(&space_guard))
     })
     .await??;
     Ok(result)

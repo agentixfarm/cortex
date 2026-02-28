@@ -7,6 +7,7 @@ pub mod pipeline;
 pub mod watcher;
 pub mod search;
 pub mod spaces;
+pub mod graph;
 
 use std::sync::Arc;
 use tokio::sync::Mutex;
@@ -16,6 +17,7 @@ use state::AppState;
 use engine::CortexEngine;
 use pipeline::embedder::EmbeddingService;
 use pipeline::indexer::DocumentIndexer;
+use graph::edges::DocumentGraph;
 use spaces::manager::SpaceManager;
 use watcher::registry::WatcherRegistry;
 
@@ -67,6 +69,9 @@ pub fn run() {
             // Create SpaceManager for Smart Spaces
             let space_manager = Arc::new(std::sync::Mutex::new(SpaceManager::new()));
 
+            // Create DocumentGraph for related documents
+            let doc_graph = Arc::new(std::sync::Mutex::new(DocumentGraph::new()));
+
             app.manage(AppState {
                 engine: engine_arc,
                 watcher_tx,
@@ -76,6 +81,7 @@ pub fn run() {
                 registry,
                 registry_path,
                 space_manager,
+                doc_graph,
             });
 
             Ok(())

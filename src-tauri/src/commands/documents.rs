@@ -101,12 +101,16 @@ pub async fn get_related_documents(
     limit: usize,
     state: State<'_, AppState>,
 ) -> Result<Vec<Document>, AppError> {
-    let _engine = state.engine.clone();
-    let _id = id;
-    let _limit = limit;
+    let graph = state.doc_graph.clone();
+    let engine = state.engine.clone();
+    let id_owned = id;
+
     let results = tokio::task::spawn_blocking(move || {
-        // Phase 3 will use RuVector graph queries to find related documents
-        Ok::<Vec<Document>, AppError>(vec![])
+        let graph_guard = graph
+            .lock()
+            .map_err(|e| AppError::Internal(e.to_string()))?;
+        let engine_guard = engine.blocking_lock();
+        crate::graph::related::get_related_impl(&id_owned, limit, &graph_guard, &engine_guard)
     })
     .await??;
     Ok(results)

@@ -85,13 +85,22 @@ pub async fn recluster_spaces(
 ) -> Result<Vec<Space>, AppError> {
     let engine = state.engine.clone();
     let space_mgr = state.space_manager.clone();
+    let doc_graph = state.doc_graph.clone();
 
     let results = tokio::task::spawn_blocking(move || {
         let engine_guard = engine.blocking_lock();
         let mut space_guard = space_mgr
             .lock()
             .map_err(|e| AppError::Internal(e.to_string()))?;
-        space_guard.recluster(&engine_guard)
+        let spaces = space_guard.recluster(&engine_guard)?;
+
+        // Rebuild document graph after recluster
+        let mut graph_guard = doc_graph
+            .lock()
+            .map_err(|e| AppError::Internal(e.to_string()))?;
+        graph_guard.build_edges(&engine_guard, &space_guard)?;
+
+        Ok::<Vec<Space>, AppError>(spaces)
     })
     .await??;
     Ok(results)

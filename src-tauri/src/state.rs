@@ -5,6 +5,7 @@ use tokio::sync::mpsc;
 use crate::engine::CortexEngine;
 use crate::pipeline::embedder::EmbeddingService;
 use crate::pipeline::indexer::DocumentIndexer;
+use crate::graph::edges::DocumentGraph;
 use crate::spaces::manager::SpaceManager;
 use crate::watcher::registry::WatcherRegistry;
 
@@ -45,4 +46,6 @@ pub struct AppState {
     pub registry_path: PathBuf,
     /// Smart Spaces manager: clustering, naming, manual moves.
     pub space_manager: Arc<std::sync::Mutex<SpaceManager>>,
+    /// Document relationship graph for related docs and space network viz.
+    pub doc_graph: Arc<std::sync::Mutex<DocumentGraph>>,
 }
