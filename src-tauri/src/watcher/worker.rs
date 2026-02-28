@@ -8,11 +8,10 @@ use serde::Serialize;
 use tauri::Emitter;
 
 use crate::engine::CortexEngine;
+use crate::pipeline::embedder::EmbeddingService;
+use crate::pipeline::indexer::DocumentIndexer;
 use crate::state::WatcherCommand;
 use crate::watcher::registry::WatcherRegistry;
-
-// NOTE: EmbeddingService is wired in Plan 05. Placeholder here to keep the API stable.
-pub struct EmbeddingService;
 
 /// Payload emitted via Tauri event "index-progress" for frontend updates.
 #[derive(Clone, Serialize)]
@@ -47,8 +46,9 @@ enum FileEventKind {
 /// any Watcher implementation, so the swap is a one-line change.
 pub fn spawn_watcher_task(
     app_handle: tauri::AppHandle,
-    _engine: Arc<tokio::sync::Mutex<CortexEngine>>,
-    _embedding_service: Arc<EmbeddingService>,
+    engine: Arc<tokio::sync::Mutex<CortexEngine>>,
+    embedding_service: Arc<EmbeddingService>,
+    indexer: Arc<DocumentIndexer>,
     registry: Arc<std::sync::Mutex<WatcherRegistry>>,
     _registry_path: PathBuf,
     mut cmd_rx: tokio::sync::mpsc::Receiver<WatcherCommand>,
@@ -133,7 +133,6 @@ pub fn spawn_watcher_task(
 
                     match event.kind {
                         FileEventKind::CreateOrModify => {
-                            // Placeholder: real indexing wired in Plan 05
                             let _ = app_handle.emit("index-progress", IndexProgress {
                                 file_path: path_str.clone(),
                                 status: "indexing".to_string(),
@@ -141,12 +140,37 @@ pub fn spawn_watcher_task(
                                 error: None,
                                 folder_id: folder_id.clone(),
                             });
-                            let _ = app_handle.emit("index-progress", IndexProgress {
-                                file_path: path_str,
-                                status: "indexed".to_string(),
-                                doc_id: None,
-                                error: None,
-                                folder_id,
+
+                            let eng = engine.clone();
+                            let emb = embedding_service.clone();
+                            let idx = indexer.clone();
+                            let ah = app_handle.clone();
+                            let ps = path_str.clone();
+                            let fid = folder_id.clone();
+                            let file_path = event.path.clone();
+
+                            tokio::task::spawn_blocking(move || {
+                                let engine_guard = eng.blocking_lock();
+                                match idx.index_file(&file_path, &engine_guard, &emb) {
+                                    Ok(doc_id) => {
+                                        let _ = ah.emit("index-progress", IndexProgress {
+                                            file_path: ps,
+                                            status: "indexed".to_string(),
+                                            doc_id: Some(doc_id),
+                                            error: None,
+                                            folder_id: fid,
+                                        });
+                                    }
+                                    Err(e) => {
+                                        let _ = ah.emit("index-progress", IndexProgress {
+                                            file_path: ps,
+                                            status: "error".to_string(),
+                                            doc_id: None,
+                                            error: Some(e.to_string()),
+                                            folder_id: fid,
+                                        });
+                                    }
+                                }
                             });
                         }
                         FileEventKind::Remove => {

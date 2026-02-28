@@ -8,19 +8,33 @@ pub async fn index_document(
     path: String,
     state: State<'_, AppState>,
 ) -> Result<DocumentMeta, AppError> {
-    let _engine = state.engine.clone();
-    let result = tokio::task::spawn_blocking(move || {
-        // Phase 2 will implement real document indexing via the pipeline
-        Ok::<DocumentMeta, AppError>(DocumentMeta {
-            id: format!("doc-{}", uuid_stub(&path)),
-            name: path.split('/').last().unwrap_or("unknown").to_string(),
-            path: path.clone(),
-            doc_type: detect_doc_type(&path),
-            size: 0,
-        })
+    let engine = state.engine.clone();
+    let embedding_service = state.embedding_service.clone();
+    let indexer = state.indexer.clone();
+    let path_owned = path.clone();
+
+    let doc_id = tokio::task::spawn_blocking(move || {
+        let file_path = std::path::Path::new(&path_owned);
+        let engine_guard = engine.blocking_lock();
+        indexer.index_file(file_path, &engine_guard, &embedding_service)
     })
     .await??;
-    Ok(result)
+
+    let file_path = std::path::Path::new(&path);
+    let name = file_path
+        .file_name()
+        .and_then(|n| n.to_str())
+        .unwrap_or("unknown")
+        .to_string();
+    let doc_type = detect_doc_type(file_path.to_str().unwrap_or(""));
+    let size = std::fs::metadata(&path).ok().map(|m| m.len()).unwrap_or(0);
+    Ok(DocumentMeta {
+        id: doc_id,
+        name,
+        path,
+        doc_type,
+        size,
+    })
 }
 
 #[tauri::command]
@@ -33,7 +47,7 @@ pub async fn search_documents(
     let _query = query;
     let _filters = filters;
     let results = tokio::task::spawn_blocking(move || {
-        // Phase 2 will implement real search via RuVector
+        // Phase 3 will implement real search via RuVector
         Ok::<Vec<SearchResult>, AppError>(vec![])
     })
     .await??;
@@ -47,7 +61,7 @@ pub async fn get_document(
 ) -> Result<Document, AppError> {
     let _engine = state.engine.clone();
     let result = tokio::task::spawn_blocking(move || {
-        // Phase 2 will look up the real document from RuVector
+        // Phase 3 will look up the real document from RuVector
         Ok::<Document, AppError>(Document {
             id: id.clone(),
             name: "Sample Document.pdf".to_string(),
@@ -84,7 +98,7 @@ pub async fn get_related_documents(
     let _id = id;
     let _limit = limit;
     let results = tokio::task::spawn_blocking(move || {
-        // Phase 2 will use RuVector graph queries to find related documents
+        // Phase 3 will use RuVector graph queries to find related documents
         Ok::<Vec<Document>, AppError>(vec![])
     })
     .await??;
@@ -99,18 +113,11 @@ pub async fn toggle_favorite(
     let _engine = state.engine.clone();
     let _id = id;
     let result = tokio::task::spawn_blocking(move || {
-        // Phase 2 will persist the favorite flag in RuVector metadata
+        // Phase 4 will persist the favorite flag in RuVector metadata
         Ok::<bool, AppError>(true)
     })
     .await??;
     Ok(result)
-}
-
-// --- Helpers (stub only, not exported) ---
-
-fn uuid_stub(input: &str) -> String {
-    // Simple deterministic stub ID from input — Phase 2 uses real UUIDs
-    format!("{:x}", input.len())
 }
 
 fn detect_doc_type(path: &str) -> String {

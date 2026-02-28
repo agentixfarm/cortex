@@ -12,26 +12,63 @@ use tokio::sync::mpsc;
 use tauri::Manager;
 use state::AppState;
 use engine::CortexEngine;
+use pipeline::embedder::EmbeddingService;
+use pipeline::indexer::DocumentIndexer;
+use watcher::registry::WatcherRegistry;
 
 pub fn run() {
     tauri::Builder::default()
         .setup(|app| {
-            // Use Tauri's app_data_dir for proper storage location (platform-appropriate)
-            let data_dir = app.path().app_data_dir()
-                .expect("could not resolve app data dir")
-                .join("vectors");
+            let app_data = app.path().app_data_dir()
+                .expect("could not resolve app data dir");
+            std::fs::create_dir_all(&app_data)?;
+
+            let data_dir = app_data.join("vectors");
+            let registry_path = app_data.join("watcher-registry.json");
 
             let engine = CortexEngine::new_with_path(data_dir)
                 .expect("RuVector initialization failed");
 
-            // Placeholder channels — Phase 2+ will connect these to real background tasks.
-            let (watcher_tx, _watcher_rx) = mpsc::channel(32);
+            // Initialize embedding service (downloads ~90MB model on first run)
+            let embedding_service = Arc::new(
+                EmbeddingService::new_local()
+                    .expect("Embedding model init failed — check ~/.cache/fastembed/"),
+            );
+
+            // Load persistent watcher registry
+            let registry = Arc::new(std::sync::Mutex::new(
+                WatcherRegistry::load(&registry_path),
+            ));
+
+            // Create document indexer
+            let indexer = Arc::new(DocumentIndexer::new());
+
+            // Channels for watcher communication
+            let (watcher_tx, watcher_rx) = mpsc::channel(32);
             let (_index_tx, index_rx) = mpsc::channel(32);
 
+            let engine_arc = Arc::new(Mutex::new(engine));
+
+            // Spawn persistent watcher background task
+            let app_handle = app.handle().clone();
+            watcher::worker::spawn_watcher_task(
+                app_handle,
+                engine_arc.clone(),
+                embedding_service.clone(),
+                indexer.clone(),
+                registry.clone(),
+                registry_path.clone(),
+                watcher_rx,
+            );
+
             app.manage(AppState {
-                engine: Arc::new(Mutex::new(engine)),
+                engine: engine_arc,
                 watcher_tx,
                 index_rx: Arc::new(Mutex::new(index_rx)),
+                embedding_service,
+                indexer,
+                registry,
+                registry_path,
             });
 
             Ok(())
