@@ -162,6 +162,39 @@ export function useRelatedDocuments(id: string, limit = 5) {
 }
 
 /**
+ * Fetches recent documents, sorted by modification date (newest first).
+ */
+export function useRecentDocuments(limit = 50) {
+  return useQuery({
+    queryKey: [...queryKeys.recentDocuments, limit],
+    queryFn: () =>
+      tauriInvoke<Document[]>(
+        "get_recent_documents",
+        { limit },
+        () =>
+          [...mockDocuments]
+            .sort((a, b) => new Date(b.modifiedAt).getTime() - new Date(a.modifiedAt).getTime())
+            .slice(0, limit),
+      ),
+  });
+}
+
+/**
+ * Fetches documents marked as favorite.
+ */
+export function useFavoriteDocuments() {
+  return useQuery({
+    queryKey: queryKeys.favoriteDocuments,
+    queryFn: () =>
+      tauriInvoke<Document[]>(
+        "get_favorite_documents",
+        {},
+        () => mockDocuments.filter((d) => d.isFavorite),
+      ),
+  });
+}
+
+/**
  * Indexes a new document from a file path.
  */
 export function useIndexDocument() {
@@ -219,6 +252,20 @@ export function useDocumentSearch(query: string, filters: SearchFilters = {}) {
           ),
       ),
     enabled: query.length > 0,
+  });
+}
+
+/**
+ * Records a search result click for analytics and self-learning.
+ */
+export function useRecordSearchClick() {
+  return useMutation({
+    mutationFn: ({ query, documentId }: { query: string; documentId: string }) =>
+      tauriInvoke<void>(
+        "record_search_click",
+        { query, documentId },
+        () => undefined,
+      ),
   });
 }
 

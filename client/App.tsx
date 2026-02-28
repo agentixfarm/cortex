@@ -12,6 +12,10 @@ import Placeholder from "./pages/Placeholder";
 import SpacesPage from "./pages/SpacesPage";
 import SpaceDetailPage from "./pages/SpaceDetailPage";
 import InsightsPage from "./pages/InsightsPage";
+import RecentPage from "./pages/RecentPage";
+import FavoritesPage from "./pages/FavoritesPage";
+import TagsPage from "./pages/TagsPage";
+import WatchedPage from "./pages/WatchedPage";
 import NotFound from "./pages/NotFound";
 import { ThemeProvider } from "next-themes";
 
@@ -30,10 +34,10 @@ const App = () => (
               <Route path="/spaces" element={<SpacesPage />} />
               <Route path="/spaces/:id" element={<SpaceDetailPage />} />
               <Route path="/search" element={<Placeholder />} />
-              <Route path="/recent" element={<Placeholder />} />
-              <Route path="/favorites" element={<Placeholder />} />
-              <Route path="/tags" element={<Placeholder />} />
-              <Route path="/watched" element={<Placeholder />} />
+              <Route path="/recent" element={<RecentPage />} />
+              <Route path="/favorites" element={<FavoritesPage />} />
+              <Route path="/tags" element={<TagsPage />} />
+              <Route path="/watched" element={<WatchedPage />} />
               <Route path="/insights" element={<InsightsPage />} />
               <Route path="/settings" element={<Placeholder />} />
               <Route path="/onboarding" element={<Placeholder />} />
