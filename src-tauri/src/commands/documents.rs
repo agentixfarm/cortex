@@ -270,6 +270,86 @@ pub async fn record_search_click(
     Ok(())
 }
 
+#[tauri::command]
+pub async fn get_recent_documents(
+    limit: Option<usize>,
+    state: State<'_, AppState>,
+) -> Result<Vec<Document>, AppError> {
+    let engine = state.engine.clone();
+    let limit = limit.unwrap_or(10);
+
+    let results = tokio::task::spawn_blocking(move || {
+        let engine_guard = engine.blocking_lock();
+        let collection_arc = engine_guard
+            .collections
+            .get_collection("documents_384")
+            .ok_or_else(|| {
+                AppError::VectorStorage("documents_384 collection not found".to_string())
+            })?;
+
+        let collection = collection_arc.read();
+        let all_ids: Vec<String> = collection.db.keys()
+            .map_err(|e| AppError::VectorStorage(e.to_string()))?;
+
+        let mut docs: Vec<Document> = Vec::new();
+        for id in &all_ids {
+            if let Ok(Some(entry)) = collection.db.get(id) {
+                if let Some(metadata) = entry.metadata.as_ref() {
+                    docs.push(crate::search::query::build_document_from_metadata(id, metadata));
+                }
+            }
+        }
+
+        // Sort by modified_at descending
+        docs.sort_by(|a, b| b.modified_at.cmp(&a.modified_at));
+        docs.truncate(limit);
+
+        Ok::<Vec<Document>, AppError>(docs)
+    })
+    .await??;
+    Ok(results)
+}
+
+#[tauri::command]
+pub async fn get_favorite_documents(
+    state: State<'_, AppState>,
+) -> Result<Vec<Document>, AppError> {
+    let engine = state.engine.clone();
+
+    let results = tokio::task::spawn_blocking(move || {
+        let engine_guard = engine.blocking_lock();
+        let collection_arc = engine_guard
+            .collections
+            .get_collection("documents_384")
+            .ok_or_else(|| {
+                AppError::VectorStorage("documents_384 collection not found".to_string())
+            })?;
+
+        let collection = collection_arc.read();
+        let all_ids: Vec<String> = collection.db.keys()
+            .map_err(|e| AppError::VectorStorage(e.to_string()))?;
+
+        let mut docs: Vec<Document> = Vec::new();
+        for id in &all_ids {
+            if let Ok(Some(entry)) = collection.db.get(id) {
+                if let Some(metadata) = entry.metadata.as_ref() {
+                    let is_fav = metadata
+                        .get("is_favorite")
+                        .and_then(|v| v.as_bool())
+                        .unwrap_or(false);
+                    if is_fav {
+                        docs.push(crate::search::query::build_document_from_metadata(id, metadata));
+                    }
+                }
+            }
+        }
+
+        Ok::<Vec<Document>, AppError>(docs)
+    })
+    .await??;
+    Ok(results)
+}
+
 fn detect_doc_type(path: &str) -> String {
     let ext = path.rsplit('.').next().unwrap_or("").to_lowercase();
     match ext.as_str() {

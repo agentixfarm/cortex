@@ -14,14 +14,33 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { formatBytes } from "@/lib/utils";
+import { useSpaces, useStats } from "@/hooks/useTauri";
+
+// Assumed storage quota (configurable in settings later)
+const STORAGE_QUOTA_BYTES = 5 * 1024 * 1024 * 1024; // 5 GB
 
 export function Sidebar() {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const location = useLocation();
 
+  // Live data hooks
+  const { data: spaces, isLoading: spacesLoading } = useSpaces();
+  const { data: stats } = useStats();
+
   const isActive = (path: string) => {
     return location.pathname === path || location.pathname.startsWith(path + "/");
   };
+
+  // Top 6 spaces by document count
+  const sidebarSpaces = spaces
+    ? [...spaces].sort((a, b) => b.documentCount - a.documentCount).slice(0, 6)
+    : [];
+
+  // Storage display
+  const indexSize = stats?.indexSize ?? 0;
+  const storageLabel = `${formatBytes(indexSize)} / ${formatBytes(STORAGE_QUOTA_BYTES)}`;
+  const storagePercent = STORAGE_QUOTA_BYTES > 0 ? Math.min((indexSize / STORAGE_QUOTA_BYTES) * 100, 100) : 0;
 
   const mainLinks = [
     { path: "/", label: "Dashboard", icon: Home },
@@ -85,9 +104,12 @@ export function Sidebar() {
         </div>
       </div>
 
-      {/* Quick Search */}
+      {/* Quick Search — will open command palette in Plan 05 */}
       <div className="border-b border-border-primary px-3 py-4">
         <button
+          onClick={() => {
+            // Command palette wiring deferred to Plan 05 (UX)
+          }}
           className={cn(
             "flex w-full items-center gap-2 rounded-md border border-border-primary bg-bg-secondary px-3 py-2 text-sm text-text-tertiary transition-colors hover:border-border-secondary hover:bg-bg-tertiary",
             isCollapsed && "justify-center"
@@ -95,9 +117,7 @@ export function Sidebar() {
         >
           <Search size={16} />
           {!isCollapsed && (
-            <>
-              <span className="flex-1 text-left">⌘K</span>
-            </>
+            <span className="flex-1 text-left">Cmd+K</span>
           )}
         </button>
       </div>
@@ -115,7 +135,7 @@ export function Sidebar() {
           ))}
         </div>
 
-        {/* Spaces Section */}
+        {/* Spaces Section — driven by useSpaces() */}
         <div className="pt-4">
           {!isCollapsed && (
             <div className="px-3 py-2">
@@ -125,36 +145,62 @@ export function Sidebar() {
             </div>
           )}
           <div className="space-y-1">
-            {/* Placeholder spaces - these would come from data */}
-            {[
-              { name: "Property", count: 12, color: "bg-purple-500" },
-              { name: "Kids", count: 34, color: "bg-green-500" },
-              { name: "Work", count: 156, color: "bg-blue-500" },
-              { name: "Invoices", count: 89, color: "bg-amber-500" },
-            ].map((space) => (
-              <Link
-                key={space.name}
-                to={`/spaces/${space.name.toLowerCase()}`}
-                className={cn(
-                  "group flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-bg-tertiary",
-                  isActive(`/spaces/${space.name.toLowerCase()}`)
-                    ? "bg-bg-tertiary text-text-primary"
-                    : "text-text-secondary"
-                )}
-              >
+            {spacesLoading ? (
+              // Loading skeleton: 4 placeholder lines
+              Array.from({ length: 4 }).map((_, i) => (
                 <div
-                  className={cn("h-2 w-2 rounded-full flex-shrink-0", space.color)}
-                />
-                {!isCollapsed && (
-                  <>
-                    <span className="flex-1 truncate">{space.name}</span>
-                    <span className="text-xs text-text-tertiary">
-                      {space.count}
-                    </span>
-                  </>
+                  key={i}
+                  className="flex items-center gap-3 rounded-md px-3 py-2"
+                >
+                  <div className="h-2 w-2 rounded-full bg-bg-tertiary animate-pulse flex-shrink-0" />
+                  {!isCollapsed && (
+                    <div className="h-3 flex-1 rounded bg-bg-tertiary animate-pulse" />
+                  )}
+                </div>
+              ))
+            ) : sidebarSpaces.length > 0 ? (
+              <>
+                {sidebarSpaces.map((space) => (
+                  <Link
+                    key={space.id}
+                    to={`/spaces/${space.id}`}
+                    className={cn(
+                      "group flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-bg-tertiary",
+                      isActive(`/spaces/${space.id}`)
+                        ? "bg-bg-tertiary text-text-primary"
+                        : "text-text-secondary"
+                    )}
+                  >
+                    <div
+                      className="h-2 w-2 rounded-full flex-shrink-0"
+                      style={{ backgroundColor: space.color }}
+                    />
+                    {!isCollapsed && (
+                      <>
+                        <span className="flex-1 truncate">{space.name}</span>
+                        <span className="text-xs text-text-tertiary">
+                          {space.documentCount}
+                        </span>
+                      </>
+                    )}
+                  </Link>
+                ))}
+                {!isCollapsed && spaces && spaces.length > 6 && (
+                  <Link
+                    to="/spaces"
+                    className="block px-3 py-1.5 text-xs text-accent-primary hover:text-accent-hover transition-colors"
+                  >
+                    View All ({spaces.length})
+                  </Link>
                 )}
-              </Link>
-            ))}
+              </>
+            ) : (
+              !isCollapsed && (
+                <p className="px-3 py-2 text-xs text-text-tertiary">
+                  No spaces yet
+                </p>
+              )
+            )}
           </div>
         </div>
       </nav>
@@ -171,16 +217,17 @@ export function Sidebar() {
         ))}
       </div>
 
-      {/* Storage Bar */}
+      {/* Storage Bar — real index size from useStats() */}
       <div className="border-t border-border-primary px-3 py-3">
         <div className="space-y-2">
           {!isCollapsed && (
-            <div className="text-xs text-text-tertiary">
-              1.2 GB / 5 GB
-            </div>
+            <div className="text-xs text-text-tertiary">{storageLabel}</div>
           )}
           <div className="h-1.5 w-full rounded-full bg-bg-secondary overflow-hidden">
-            <div className="h-full w-1/4 rounded-full bg-accent-primary" />
+            <div
+              className="h-full rounded-full bg-accent-primary transition-all"
+              style={{ width: `${storagePercent}%` }}
+            />
           </div>
         </div>
       </div>

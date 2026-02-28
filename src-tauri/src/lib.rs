@@ -110,6 +110,8 @@ pub fn run() {
             commands::documents::get_related_documents,
             commands::documents::toggle_favorite,
             commands::documents::record_search_click,
+            commands::documents::get_recent_documents,
+            commands::documents::get_favorite_documents,
             // spaces (4)
             commands::spaces::get_spaces,
             commands::spaces::get_space_documents,
