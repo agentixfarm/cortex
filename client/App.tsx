@@ -17,6 +17,7 @@ import RecentPage from "./pages/RecentPage";
 import FavoritesPage from "./pages/FavoritesPage";
 import TagsPage from "./pages/TagsPage";
 import WatchedPage from "./pages/WatchedPage";
+import SettingsPage from "./pages/SettingsPage";
 import NotFound from "./pages/NotFound";
 import { ThemeProvider } from "next-themes";
 
@@ -40,7 +41,7 @@ const App = () => (
               <Route path="/tags" element={<TagsPage />} />
               <Route path="/watched" element={<WatchedPage />} />
               <Route path="/insights" element={<InsightsPage />} />
-              <Route path="/settings" element={<Placeholder />} />
+              <Route path="/settings" element={<SettingsPage />} />
               <Route path="/onboarding" element={<Placeholder />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             </Route>
