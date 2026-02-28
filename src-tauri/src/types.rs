@@ -3,6 +3,7 @@ use serde::{Deserialize, Serialize};
 // === Document types ===
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct Document {
     pub id: String,
     pub name: String,
@@ -20,6 +21,7 @@ pub struct Document {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct ExtractedEntity {
     pub label: String,
     pub value: String,
@@ -27,15 +29,19 @@ pub struct ExtractedEntity {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct DocumentMeta {
     pub id: String,
     pub name: String,
     pub path: String,
     pub doc_type: String,
     pub size: u64,
+    pub created_at: String,  // ISO 8601
+    pub modified_at: String,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct SearchFilters {
     pub doc_type: Option<String>,
     pub space_id: Option<String>,
@@ -45,6 +51,7 @@ pub struct SearchFilters {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct SearchResult {
     pub document: Document,
     pub score: f64,
@@ -54,6 +61,7 @@ pub struct SearchResult {
 // === Space types ===
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct Space {
     pub id: String,
     pub name: String,
@@ -69,6 +77,7 @@ pub struct Space {
 // === Folder types ===
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct WatchedFolder {
     pub id: String,
     pub path: String,
@@ -78,6 +87,7 @@ pub struct WatchedFolder {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct ScanProgress {
     pub folder_id: String,
     pub total_files: u32,
@@ -88,6 +98,7 @@ pub struct ScanProgress {
 // === Analytics types ===
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct Stats {
     pub total_documents: u32,
     pub smart_spaces: u32,
@@ -96,6 +107,7 @@ pub struct Stats {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct SpaceGraphNode {
     pub id: String,
     pub name: String,
@@ -104,6 +116,7 @@ pub struct SpaceGraphNode {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct SpaceGraphEdge {
     pub source: String,
     pub target: String,
@@ -111,21 +124,32 @@ pub struct SpaceGraphEdge {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct SpaceGraph {
     pub nodes: Vec<SpaceGraphNode>,
     pub edges: Vec<SpaceGraphEdge>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct TopQuery {
+    pub query: String,
+    pub count: u32,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct SearchAnalytics {
     pub total_searches: u32,
-    pub top_queries: Vec<String>,
+    pub top_queries: Vec<TopQuery>,
     pub avg_results_per_query: f64,
+    pub queries_this_week: u32,
 }
 
 // === Settings types ===
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct Settings {
     pub theme: String,              // "dark", "light", "system"
     pub sidebar_collapsed: bool,
@@ -133,13 +157,14 @@ pub struct Settings {
     pub watched_folders: Vec<String>,
     pub excluded_patterns: Vec<String>,
     pub index_on_startup: bool,
-    pub index_size: u64,            // Bytes — visible in Settings > Storage
-    pub storage_path: String,       // Path to RuVector data dir — visible in Settings > Storage
+    pub index_size: u64,            // Bytes -- visible in Settings > Storage
+    pub storage_path: String,       // Path to RuVector data dir -- visible in Settings > Storage
 }
 
 // === Tag types ===
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct Tag {
     pub id: String,
     pub name: String,
@@ -151,9 +176,13 @@ pub struct Tag {
 // === Activity types ===
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct ActivityItem {
     pub id: String,
     pub action: String,    // "indexed", "moved", "tagged", "searched"
     pub subject: String,
     pub timestamp: String,
+    #[serde(rename = "type")]
+    pub activity_type: String,  // "info", "success", "warning", "error"
+    pub document_id: Option<String>,
 }

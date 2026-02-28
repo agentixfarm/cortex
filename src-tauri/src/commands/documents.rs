@@ -27,13 +27,32 @@ pub async fn index_document(
         .unwrap_or("unknown")
         .to_string();
     let doc_type = detect_doc_type(file_path.to_str().unwrap_or(""));
-    let size = std::fs::metadata(&path).ok().map(|m| m.len()).unwrap_or(0);
+    let fs_meta = std::fs::metadata(&path).ok();
+    let size = fs_meta.as_ref().map(|m| m.len()).unwrap_or(0);
+    let now_iso = {
+        let dur = std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .unwrap_or_default();
+        format!("{}Z", dur.as_secs())
+    };
+    let created_at = fs_meta.as_ref()
+        .and_then(|m| m.created().ok())
+        .and_then(|t| t.duration_since(std::time::UNIX_EPOCH).ok())
+        .map(|d| format!("{}Z", d.as_secs()))
+        .unwrap_or_else(|| now_iso.clone());
+    let modified_at = fs_meta.as_ref()
+        .and_then(|m| m.modified().ok())
+        .and_then(|t| t.duration_since(std::time::UNIX_EPOCH).ok())
+        .map(|d| format!("{}Z", d.as_secs()))
+        .unwrap_or_else(|| now_iso.clone());
     Ok(DocumentMeta {
         id: doc_id,
         name,
         path,
         doc_type,
         size,
+        created_at,
+        modified_at,
     })
 }
 
