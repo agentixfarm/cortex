@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   Home,
@@ -16,12 +15,14 @@ import {
 import { cn } from "@/lib/utils";
 import { formatBytes } from "@/lib/utils";
 import { useSpaces, useStats } from "@/hooks/useTauri";
+import { useSidebarStore, useCommandPaletteStore } from "@/lib/stores";
 
 // Assumed storage quota (configurable in settings later)
 const STORAGE_QUOTA_BYTES = 5 * 1024 * 1024 * 1024; // 5 GB
 
 export function Sidebar() {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const { isCollapsed, toggle: toggleCollapsed } = useSidebarStore();
+  const { open: openPalette } = useCommandPaletteStore();
   const location = useLocation();
 
   // Live data hooks
@@ -107,9 +108,7 @@ export function Sidebar() {
       {/* Quick Search — will open command palette in Plan 05 */}
       <div className="border-b border-border-primary px-3 py-4">
         <button
-          onClick={() => {
-            // Command palette wiring deferred to Plan 05 (UX)
-          }}
+          onClick={openPalette}
           className={cn(
             "flex w-full items-center gap-2 rounded-md border border-border-primary bg-bg-secondary px-3 py-2 text-sm text-text-tertiary transition-colors hover:border-border-secondary hover:bg-bg-tertiary",
             isCollapsed && "justify-center"
@@ -234,7 +233,7 @@ export function Sidebar() {
 
       {/* Collapse Toggle */}
       <button
-        onClick={() => setIsCollapsed(!isCollapsed)}
+        onClick={toggleCollapsed}
         className="hidden sm:flex items-center justify-center border-t border-border-primary py-3 text-text-tertiary hover:text-text-secondary transition-colors w-full"
       >
         {isCollapsed ? (
