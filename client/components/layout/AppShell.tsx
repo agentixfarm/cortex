@@ -81,7 +81,7 @@ export function AppShell() {
         useCommandPaletteStore.getState().close();
         return;
       }
-      // / -> Focus search (when not in input/textarea)
+      // / -> Navigate to search and focus input (when not in input/textarea)
       if (
         e.key === "/" &&
         !meta &&
@@ -89,7 +89,14 @@ export function AppShell() {
         !(e.target instanceof HTMLTextAreaElement)
       ) {
         e.preventDefault();
-        useCommandPaletteStore.getState().open();
+        navigate("/search");
+        // Focus search input after navigation renders
+        setTimeout(() => {
+          const searchInput = document.querySelector<HTMLInputElement>('input[placeholder*="Search"]') ??
+            document.querySelector<HTMLInputElement>('input[type="search"]') ??
+            document.querySelector<HTMLInputElement>('.search-input');
+          searchInput?.focus();
+        }, 100);
         return;
       }
     };

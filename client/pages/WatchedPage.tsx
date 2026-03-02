@@ -70,8 +70,8 @@ export default function WatchedPage() {
   const handleAddFolder = useCallback(async () => {
     if (isTauri()) {
       try {
-        // @ts-ignore -- @tauri-apps/plugin-dialog may not be installed yet (Tauri-only dep)
-        const { open } = await import("@tauri-apps/plugin-dialog");
+        const mod = "@tauri-apps/" + "plugin-dialog";
+        const { open } = await import(mod);
         const selected = await open({ directory: true, multiple: false });
         if (selected && typeof selected === "string") {
           addFolder(selected, { onSuccess: () => setShowAddDialog(false) });

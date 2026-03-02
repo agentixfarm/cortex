@@ -86,8 +86,8 @@ export default function OnboardingPage() {
   const addCustomFolder = useCallback(async () => {
     if (isTauri()) {
       try {
-        // @ts-ignore -- optional Tauri dialog plugin
-        const { open } = await import("@tauri-apps/plugin-dialog");
+        const mod = "@tauri-apps/" + "plugin-dialog";
+        const { open } = await import(mod);
         const selected = await open({ directory: true, multiple: false });
         if (selected) {
           const folderPath = typeof selected === "string" ? selected : selected[0];

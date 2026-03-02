@@ -83,6 +83,7 @@ export const useIndexingStore = create<IndexingState>((set) => ({
 interface OnboardingState {
   isCompleted: boolean;
   setCompleted: (completed: boolean) => void;
+  reset: () => void;
 }
 
 export const useOnboardingStore = create<OnboardingState>()(
@@ -90,6 +91,7 @@ export const useOnboardingStore = create<OnboardingState>()(
     (set) => ({
       isCompleted: false,
       setCompleted: (completed: boolean) => set({ isCompleted: completed }),
+      reset: () => set({ isCompleted: false }),
     }),
     {
       name: "cortex-onboarding",

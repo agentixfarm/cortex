@@ -17,6 +17,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useSettings, useUpdateSettings } from "@/hooks/useTauri";
 import { toast } from "sonner";
+import { useTheme } from "next-themes";
 import type { Settings } from "@/lib/types";
 
 // --- Helper: format bytes --------------------------------------------------
@@ -60,6 +61,7 @@ function SettingsSkeleton() {
 export default function SettingsPage() {
   const { data: settings, isLoading } = useSettings();
   const { mutate: updateSettings, isPending: isSaving } = useUpdateSettings();
+  const { setTheme } = useTheme();
 
   const [local, setLocal] = useState<Settings | null>(null);
   const [isDirty, setIsDirty] = useState(false);
@@ -81,6 +83,10 @@ export default function SettingsPage() {
 
   const handleSave = useCallback(() => {
     if (!local) return;
+    // Apply theme change immediately
+    if (local.theme) {
+      setTheme(local.theme);
+    }
     updateSettings(local, {
       onSuccess: () => {
         setIsDirty(false);
@@ -90,7 +96,7 @@ export default function SettingsPage() {
         toast.error("Failed to save settings.");
       },
     });
-  }, [local, updateSettings]);
+  }, [local, updateSettings, setTheme]);
 
   if (isLoading || !local) {
     return <SettingsSkeleton />;

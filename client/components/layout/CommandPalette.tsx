@@ -26,7 +26,7 @@ import {
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
-import { useCommandPaletteStore, useSidebarStore } from "@/lib/stores";
+import { useCommandPaletteStore, useSidebarStore, useOnboardingStore } from "@/lib/stores";
 import {
   useSpaces,
   useDocumentSearch,
@@ -117,6 +117,7 @@ export function CommandPalette() {
         <Command
           className="w-full max-w-lg rounded-xl border border-border-primary bg-bg-primary shadow-2xl overflow-hidden"
           shouldFilter={true}
+          loop={true}
           onKeyDown={(e) => {
             if (e.key === "Escape") {
               close();
@@ -247,6 +248,19 @@ export function CommandPalette() {
                 <kbd className="rounded bg-bg-secondary px-1.5 py-0.5 text-[10px] font-mono text-text-tertiary">
                   Cmd+\
                 </kbd>
+              </Command.Item>
+              <Command.Item
+                value="restart onboarding setup"
+                onSelect={() =>
+                  runAction(() => {
+                    useOnboardingStore.getState().reset();
+                    navigate("/onboarding");
+                  })
+                }
+                className="flex items-center gap-3 rounded-md px-2 py-2 text-sm text-text-secondary cursor-pointer data-[selected=true]:bg-bg-tertiary data-[selected=true]:text-text-primary"
+              >
+                <RefreshCw size={16} />
+                <span className="flex-1">Restart Onboarding</span>
               </Command.Item>
               <Command.Item
                 value="recluster spaces"
