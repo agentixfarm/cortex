@@ -185,7 +185,7 @@ pub async fn get_related_documents(
 
 #[tauri::command]
 pub async fn toggle_favorite(
-    id: String,
+    doc_id: String,
     state: State<'_, AppState>,
 ) -> Result<bool, AppError> {
     let engine = state.engine.clone();
@@ -202,7 +202,7 @@ pub async fn toggle_favorite(
         let collection = collection_arc.read();
         let entry = collection
             .db
-            .get(&id)
+            .get(&doc_id)
             .map_err(|e| AppError::VectorStorage(e.to_string()))?;
 
         match entry {
@@ -226,7 +226,7 @@ pub async fn toggle_favorite(
 
                 Ok::<bool, AppError>(new_value)
             }
-            None => Err(AppError::NotFound(format!("Document {} not found", id))),
+            None => Err(AppError::NotFound(format!("Document {} not found", doc_id))),
         }
     })
     .await??;
@@ -236,7 +236,7 @@ pub async fn toggle_favorite(
 #[tauri::command]
 pub async fn record_search_click(
     query: String,
-    doc_id: String,
+    document_id: String,
     position: usize,
     state: State<'_, AppState>,
 ) -> Result<(), AppError> {
@@ -256,7 +256,7 @@ pub async fn record_search_click(
             let engine_guard = engine.blocking_lock();
             if let Some(col) = engine_guard.collections.get_collection("documents_384") {
                 let col = col.read();
-                if let Ok(Some(entry)) = col.db.get(&doc_id) {
+                if let Ok(Some(entry)) = col.db.get(&document_id) {
                     if let Ok(learner) = search_learner.lock() {
                         learner.record_click(&query_vec, &entry.vector, position);
                     }

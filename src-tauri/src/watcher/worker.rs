@@ -16,6 +16,7 @@ use crate::watcher::registry::WatcherRegistry;
 
 /// Payload emitted via Tauri event "index-progress" for frontend updates.
 #[derive(Clone, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct IndexProgress {
     pub file_path: String,
     pub status: String, // "indexing", "indexed", "skipped", "error", "removed"

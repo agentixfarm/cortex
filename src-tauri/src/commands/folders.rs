@@ -158,7 +158,7 @@ pub async fn trigger_scan(
         // Emit scan complete
         let _ = app_handle.emit("index-progress", IndexProgress {
             file_path: folder_config.path,
-            status: "scan-complete".to_string(),
+            status: "complete".to_string(),
             doc_id: None,
             error: None,
             folder_id: Some(fid),
