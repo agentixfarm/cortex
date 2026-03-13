@@ -7,10 +7,12 @@ import {
   useOnboardingStore,
   useSidebarStore,
   useCommandPaletteStore,
+  useIndexingStore,
 } from "@/lib/stores";
 import { useWatchedFolders } from "@/hooks/useTauri";
 import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
+import { isTauri } from "@/lib/tauri";
 
 export function AppShell() {
   const location = useLocation();
@@ -19,6 +21,45 @@ export function AppShell() {
   const { isCollapsed, toggle: toggleSidebar } = useSidebarStore();
   const { data: watchedFolders } = useWatchedFolders();
   const { theme, setTheme } = useTheme();
+
+  // Bridge Tauri "index-progress" events to useIndexingStore (BREAK 2 fix)
+  useEffect(() => {
+    if (!isTauri()) return;
+    let unlisten: (() => void) | undefined;
+
+    (async () => {
+      const { listen } = await import("@tauri-apps/api/event");
+      unlisten = await listen<{
+        filePath: string;
+        status: "indexing" | "indexed" | "skipped" | "error" | "removed" | "complete";
+        docId: string | null;
+        error: string | null;
+        folderId: string | null;
+      }>("index-progress", (event) => {
+        const { filePath, status } = event.payload;
+        if (status === "indexing") {
+          useIndexingStore.getState().setProgress({
+            isIndexing: true,
+            currentFile: filePath,
+          });
+        } else if (status === "complete") {
+          useIndexingStore.getState().setProgress({ isIndexing: false });
+          setTimeout(() => {
+            useIndexingStore.getState().reset();
+          }, 2000);
+        } else if (status === "error") {
+          useIndexingStore.getState().setProgress({ isIndexing: false });
+          setTimeout(() => {
+            useIndexingStore.getState().reset();
+          }, 2000);
+        }
+      });
+    })();
+
+    return () => {
+      unlisten?.();
+    };
+  }, []);
 
   // Redirect to onboarding if not completed and no watched folders
   useEffect(() => {
