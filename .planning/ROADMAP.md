@@ -16,7 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 2: Document Pipeline and File Watching** - Full ingestion loop: parse, embed, hash, extract entities, watch folders, index in background (completed 2026-02-28)
 - [x] **Phase 3: Search Intelligence and Smart Spaces** - Semantic search, GNN clustering, graph edges, SONA self-learning, attention re-ranking (completed 2026-02-28)
 - [x] **Phase 4: Frontend Integration and UX** - All 12 pages wired to live backend, command palette, onboarding, system tray, keyboard shortcuts (completed 2026-02-28)
-- [ ] **Phase 5: Integration Fixes and Gap Closure** - Fix 6 integration breaks: IPC arg mismatches, event wiring, settings persistence, onboarding layout, path_index rebuild
+- [x] **Phase 5: Integration Fixes and Gap Closure** - Fix 6 integration breaks: IPC arg mismatches, event wiring, settings persistence, onboarding layout, path_index rebuild (completed 2026-03-13)
 
 ## Phase Details
 
@@ -102,4 +102,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 | 2. Document Pipeline and File Watching | 5/5 | Complete    | 2026-02-28 |
 | 3. Search Intelligence and Smart Spaces | 5/5 | Complete    | 2026-02-28 |
 | 4. Frontend Integration and UX | 6/6 | Complete | 2026-02-28 |
-| 5. Integration Fixes and Gap Closure | 0/2 | Not Started | |
+| 5. Integration Fixes and Gap Closure | 2/2 | Complete   | 2026-03-13 |

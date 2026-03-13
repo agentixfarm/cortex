@@ -83,14 +83,14 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **PAGE-09**: Insights/analytics (donut chart, area chart, bar chart, space network graph)
 - [x] **PAGE-10**: Settings: General, Indexing, AI & Models, Privacy, Storage, About
 - [x] **PAGE-11**: Document detail: preview (65%) + metadata sidebar (35%)
-- [ ] **PAGE-12**: Onboarding wizard (Welcome, Select Folders, Scanning, Spaces Ready)
+- [x] **PAGE-12**: Onboarding wizard (Welcome, Select Folders, Scanning, Spaces Ready)
 
 ### UX
 
 - [x] **UX-01**: Command palette (Cmd+K) for search and navigation
 - [x] **UX-02**: Keyboard shortcuts (Cmd+1/2/3, Cmd+,, Cmd+D, Cmd+\)
 - [x] **UX-03**: System tray with background indexing indicator
-- [ ] **UX-04**: Background indexing progress in TopBar
+- [x] **UX-04**: Background indexing progress in TopBar
 
 ## v2 Requirements
 
@@ -185,11 +185,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | PAGE-09 | Phase 4 | Complete |
 | PAGE-10 | Phase 5 | Complete |
 | PAGE-11 | Phase 5 | Complete |
-| PAGE-12 | Phase 5 | Pending |
+| PAGE-12 | Phase 5 | Complete |
 | UX-01 | Phase 4 | Complete |
 | UX-02 | Phase 4 | Complete |
 | UX-03 | Phase 4 | Complete |
-| UX-04 | Phase 5 | Pending |
+| UX-04 | Phase 5 | Complete |
 
 **Coverage:**
 - v1 requirements: 58 total (note: original file said 50, actual count is 58)

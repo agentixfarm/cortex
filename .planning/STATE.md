@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: in-progress
-last_updated: "2026-03-13T05:43:00.000Z"
+last_updated: "2026-03-13T00:10:00.000Z"
 progress:
   total_phases: 5
-  completed_phases: 4
+  completed_phases: 5
   total_plans: 23
-  completed_plans: 22
+  completed_plans: 23
 ---
 
 # Project State
@@ -18,16 +18,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-02-27)
 
 **Core value:** Documents sort themselves into meaningful spaces through AI-powered clustering; users find anything with natural language search -- all running locally.
-**Current focus:** Phase 5 -- Integration Fixes and Gap Closure -- In progress
+**Current focus:** Phase 5 -- Integration Fixes and Gap Closure -- Complete
 
 ## Current Position
 
-Phase: 5 of 5 (Integration Fixes and Gap Closure) -- In Progress
-Plan: 1 of 2 complete (05-01 done, 05-02 pending)
-Status: Phase 5 started. Plan 05-01 executed: Rust backend IPC fixes and settings persistence.
-Last activity: 2026-03-13 -- Plan 05-01 executed: IPC param name fixes, IndexProgress camelCase, path_index rebuild, settings JSON persistence
+Phase: 5 of 5 (Integration Fixes and Gap Closure) -- Complete
+Plan: 2 of 2 complete (05-01 and 05-02 done)
+Status: All phases complete. All 23 plans executed across 5 phases.
+Last activity: 2026-03-13 -- Plan 05-02 executed: TopBar indexing indicator wired to Tauri events, onboarding route moved outside AppShell
 
-Progress: [███████████████████░] 95%
+Progress: [████████████████████] 100%
 
 ## Performance Metrics
 
@@ -43,7 +43,7 @@ Progress: [███████████████████░] 95%
 | 02-document-pipeline-and-file-watching | 5/5 | Complete |
 | 03-search-intelligence-and-smart-spaces | 5/5 | Complete |
 | 04-frontend-integration-and-ux | 6/6 | Complete |
-| 05-integration-fixes-and-gap-closure | 1/2 | In Progress |
+| 05-integration-fixes-and-gap-closure | 2/2 | Complete |
 
 **Test Counts:**
 | Phase | Tests Added | Total |
@@ -111,6 +111,9 @@ Recent decisions affecting current work:
 - [Phase 05-01]: Settings path derived from registry_path.parent() to avoid adding dirs crate dependency
 - [Phase 05-01]: scan-complete status was in commands/folders.rs trigger_scan (not worker.rs as plan stated); fixed in correct location
 - [Phase 05-01]: rebuild_path_index placed after engine_arc declaration (blocking_lock safe in sync setup closure)
+- [Phase 05-02]: isTauri() import from @/lib/tauri (not @/lib/utils) -- Tauri helpers live in dedicated tauri.ts module
+- [Phase 05-02]: Tauri event payload (filePath/status) mapped to Zustand store shape (currentFile/isIndexing) in AppShell listener
+- [Phase 05-02]: /onboarding route placed BEFORE AppShell Route group -- React Router matches first non-layout route, so fullscreen pages must precede layout wrapper
 
 ### Pending Todos
 
@@ -130,6 +133,6 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-03-13
-Stopped at: Completed 05-01-PLAN.md. Phase 5 in progress: 1 of 2 plans executed.
-Resume file: .planning/phases/05-integration-fixes-and-gap-closure/05-02-PLAN.md
-Resume action: Execute 05-02-PLAN.md (frontend IPC hook fixes)
+Stopped at: Completed 05-02-PLAN.md. All 5 phases complete. All 23 plans executed.
+Resume file: N/A -- project complete
+Resume action: N/A -- all plans executed
