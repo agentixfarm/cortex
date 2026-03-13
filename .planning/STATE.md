@@ -2,13 +2,13 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: complete
-last_updated: "2026-02-28T17:53:32.000Z"
+status: in-progress
+last_updated: "2026-03-13T05:43:00.000Z"
 progress:
-  total_phases: 4
+  total_phases: 5
   completed_phases: 4
-  total_plans: 21
-  completed_plans: 21
+  total_plans: 23
+  completed_plans: 22
 ---
 
 # Project State
@@ -18,16 +18,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-02-27)
 
 **Core value:** Documents sort themselves into meaningful spaces through AI-powered clustering; users find anything with natural language search -- all running locally.
-**Current focus:** Phase 4 -- Frontend Integration and UX -- Planning complete, ready for execution
+**Current focus:** Phase 5 -- Integration Fixes and Gap Closure -- In progress
 
 ## Current Position
 
-Phase: 4 of 4 (Frontend Integration and UX) -- Complete
-Plan: 6 of 6 complete (04-01 through 04-06 done)
-Status: All phases complete. All 21 plans executed across 4 phases.
-Last activity: 2026-02-28 -- Plan 04-06 executed: Onboarding, Command Palette, Keyboard Shortcuts, Indexing Indicator
+Phase: 5 of 5 (Integration Fixes and Gap Closure) -- In Progress
+Plan: 1 of 2 complete (05-01 done, 05-02 pending)
+Status: Phase 5 started. Plan 05-01 executed: Rust backend IPC fixes and settings persistence.
+Last activity: 2026-03-13 -- Plan 05-01 executed: IPC param name fixes, IndexProgress camelCase, path_index rebuild, settings JSON persistence
 
-Progress: [████████████████████] 100%
+Progress: [███████████████████░] 95%
 
 ## Performance Metrics
 
@@ -43,6 +43,7 @@ Progress: [████████████████████] 100%
 | 02-document-pipeline-and-file-watching | 5/5 | Complete |
 | 03-search-intelligence-and-smart-spaces | 5/5 | Complete |
 | 04-frontend-integration-and-ux | 6/6 | Complete |
+| 05-integration-fixes-and-gap-closure | 1/2 | In Progress |
 
 **Test Counts:**
 | Phase | Tests Added | Total |
@@ -107,6 +108,9 @@ Recent decisions affecting current work:
 - [Phase 04-06]: cmdk library used for command palette (already in package.json)
 - [Phase 04-06]: System tray (UX-03) deferred -- TopBar indexing indicator provides equivalent UX
 - [Phase 04-06]: Sidebar collapsed state migrated from useState to Zustand store for cross-component sync
+- [Phase 05-01]: Settings path derived from registry_path.parent() to avoid adding dirs crate dependency
+- [Phase 05-01]: scan-complete status was in commands/folders.rs trigger_scan (not worker.rs as plan stated); fixed in correct location
+- [Phase 05-01]: rebuild_path_index placed after engine_arc declaration (blocking_lock safe in sync setup closure)
 
 ### Pending Todos
 
@@ -125,7 +129,7 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-02-28
-Stopped at: Completed 04-06-PLAN.md. All 4 phases complete. All 21 plans executed.
-Resume file: N/A -- project complete
-Resume action: N/A -- all plans executed
+Last session: 2026-03-13
+Stopped at: Completed 05-01-PLAN.md. Phase 5 in progress: 1 of 2 plans executed.
+Resume file: .planning/phases/05-integration-fixes-and-gap-closure/05-02-PLAN.md
+Resume action: Execute 05-02-PLAN.md (frontend IPC hook fixes)
