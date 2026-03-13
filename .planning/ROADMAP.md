@@ -16,6 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 2: Document Pipeline and File Watching** - Full ingestion loop: parse, embed, hash, extract entities, watch folders, index in background (completed 2026-02-28)
 - [x] **Phase 3: Search Intelligence and Smart Spaces** - Semantic search, GNN clustering, graph edges, SONA self-learning, attention re-ranking (completed 2026-02-28)
 - [x] **Phase 4: Frontend Integration and UX** - All 12 pages wired to live backend, command palette, onboarding, system tray, keyboard shortcuts (completed 2026-02-28)
+- [ ] **Phase 5: Integration Fixes and Gap Closure** - Fix 6 integration breaks: IPC arg mismatches, event wiring, settings persistence, onboarding layout, path_index rebuild
 
 ## Phase Details
 
@@ -74,6 +75,22 @@ Decimal phases appear between their surrounding integers in numeric order.
   - Plan 05 (Wave 2): Analytics + Settings — Insights (4 chart types, network graph), Settings (6 tabs)
   - Plan 06 (Wave 3): UX polish — Onboarding wizard, Cmd+K command palette, keyboard shortcuts, indexing indicator, final cleanup
 
+### Phase 5: Integration Fixes and Gap Closure
+**Goal**: Fix all 6 integration breaks so every IPC command works correctly, events flow from backend to frontend, settings persist, and onboarding renders fullscreen.
+**Depends on**: Phase 4
+**Requirements**: INTL-02, FWAT-05, FWAT-06, PAGE-06, PAGE-08, PAGE-10, PAGE-11, PAGE-12, UX-04
+**Gap Closure**: Closes 6 integration breaks from v1.0-MILESTONE-AUDIT.md
+**Success Criteria** (what must be TRUE):
+  1. toggle_favorite and record_search_click IPC commands succeed at runtime (no arg mismatch errors)
+  2. TopBar indexing indicator activates during background indexing (event listener wired)
+  3. WatchedPage scan progress updates correctly (field names and status strings match)
+  4. Previously-indexed documents are not re-embedded on app restart (path_index rebuilt)
+  5. Settings persist across app restarts (JSON file in app_data_dir)
+  6. Onboarding wizard renders fullscreen without Sidebar/TopBar
+**Plans**:
+  - Plan 01: Rust backend fixes — IPC param names, IndexProgress serde camelCase, path_index rebuild
+  - Plan 02: Frontend + settings wiring — event listener, settings persistence, onboarding route, WatchedPage fixes
+
 ## Progress
 
 **Execution Order:**
@@ -85,3 +102,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 | 2. Document Pipeline and File Watching | 5/5 | Complete    | 2026-02-28 |
 | 3. Search Intelligence and Smart Spaces | 5/5 | Complete    | 2026-02-28 |
 | 4. Frontend Integration and UX | 6/6 | Complete | 2026-02-28 |
+| 5. Integration Fixes and Gap Closure | 0/2 | Not Started | |

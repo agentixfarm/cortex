@@ -46,29 +46,29 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Search
 
-- [ ] **SRCH-01**: Semantic search with natural language queries via HNSW nearest neighbor
-- [ ] **SRCH-02**: Search result highlighting with matched excerpts
-- [ ] **SRCH-03**: Metadata filters (type, date, space) applied pre-search
-- [ ] **SRCH-04**: Entity-filtered search ("invoices over $500") using extracted entities
-- [ ] **SRCH-05**: Incremental search-as-you-type with 150ms debounce
-- [ ] **SRCH-06**: GNN attention re-ranking of search results (ruvector-attention)
+- [x] **SRCH-01**: Semantic search with natural language queries via HNSW nearest neighbor
+- [x] **SRCH-02**: Search result highlighting with matched excerpts
+- [x] **SRCH-03**: Metadata filters (type, date, space) applied pre-search
+- [x] **SRCH-04**: Entity-filtered search ("invoices over $500") using extracted entities
+- [x] **SRCH-05**: Incremental search-as-you-type with 150ms debounce
+- [x] **SRCH-06**: GNN attention re-ranking of search results (ruvector-attention)
 
 ### Smart Spaces
 
-- [ ] **SPAC-01**: GNN clustering auto-discovers document groups as Smart Spaces
-- [ ] **SPAC-02**: GNN clustering runs as decoupled background job (not per-document)
-- [ ] **SPAC-03**: Space naming via rule-based approach (most frequent entity type + noun)
-- [ ] **SPAC-04**: Space centroid vectors for similarity comparison
-- [ ] **SPAC-05**: Related documents discovery via graph edges (ruvector-graph)
-- [ ] **SPAC-06**: User can move document between spaces manually
-- [ ] **SPAC-07**: Domain expansion: new spaces bootstrap from existing knowledge (ruvector-domain-expansion)
+- [x] **SPAC-01**: GNN clustering auto-discovers document groups as Smart Spaces
+- [x] **SPAC-02**: GNN clustering runs as decoupled background job (not per-document)
+- [x] **SPAC-03**: Space naming via rule-based approach (most frequent entity type + noun)
+- [x] **SPAC-04**: Space centroid vectors for similarity comparison
+- [x] **SPAC-05**: Related documents discovery via graph edges (ruvector-graph)
+- [x] **SPAC-06**: User can move document between spaces manually
+- [x] **SPAC-07**: Domain expansion: new spaces bootstrap from existing knowledge (ruvector-domain-expansion)
 
 ### Intelligence
 
-- [ ] **INTL-01**: SONA self-learning: search queries generate learning signals
+- [x] **INTL-01**: SONA self-learning: search queries generate learning signals
 - [ ] **INTL-02**: Click-through data tunes search ranking over time
-- [ ] **INTL-03**: Graph edges connect documents by content similarity, shared space, shared tags, shared entities
-- [ ] **INTL-04**: Space network graph data from ruvector-graph for visualization
+- [x] **INTL-03**: Graph edges connect documents by content similarity, shared space, shared tags, shared entities
+- [x] **INTL-04**: Space network graph data from ruvector-graph for visualization
 
 ### Frontend Pages
 
@@ -77,20 +77,20 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **PAGE-03**: Space detail (sub-spaces, document list, related spaces)
 - [x] **PAGE-04**: Search page (split-pane: results + preview panel, filters)
 - [x] **PAGE-05**: Recent documents timeline (Today/Yesterday/This Week)
-- [x] **PAGE-06**: Favorites page (starred documents with sort)
+- [ ] **PAGE-06**: Favorites page (starred documents with sort)
 - [x] **PAGE-07**: Tag cloud page (auto-generated + user-created tags)
-- [x] **PAGE-08**: Watched folders management (add/remove/pause, file type toggles, exclusions)
+- [ ] **PAGE-08**: Watched folders management (add/remove/pause, file type toggles, exclusions)
 - [x] **PAGE-09**: Insights/analytics (donut chart, area chart, bar chart, space network graph)
-- [x] **PAGE-10**: Settings: General, Indexing, AI & Models, Privacy, Storage, About
-- [x] **PAGE-11**: Document detail: preview (65%) + metadata sidebar (35%)
-- [x] **PAGE-12**: Onboarding wizard (Welcome, Select Folders, Scanning, Spaces Ready)
+- [ ] **PAGE-10**: Settings: General, Indexing, AI & Models, Privacy, Storage, About
+- [ ] **PAGE-11**: Document detail: preview (65%) + metadata sidebar (35%)
+- [ ] **PAGE-12**: Onboarding wizard (Welcome, Select Folders, Scanning, Spaces Ready)
 
 ### UX
 
 - [x] **UX-01**: Command palette (Cmd+K) for search and navigation
 - [x] **UX-02**: Keyboard shortcuts (Cmd+1/2/3, Cmd+,, Cmd+D, Cmd+\)
 - [x] **UX-03**: System tray with background indexing indicator
-- [x] **UX-04**: Background indexing progress in TopBar
+- [ ] **UX-04**: Background indexing progress in TopBar
 
 ## v2 Requirements
 
@@ -155,41 +155,41 @@ Which phases cover which requirements. Updated during roadmap creation.
 | FWAT-02 | Phase 2 | Complete |
 | FWAT-03 | Phase 2 | Complete |
 | FWAT-04 | Phase 2 | Complete |
-| FWAT-05 | Phase 2 | Pending |
-| FWAT-06 | Phase 2 | Pending |
-| SRCH-01 | Phase 3 | Pending |
-| SRCH-02 | Phase 3 | Pending |
-| SRCH-03 | Phase 3 | Pending |
-| SRCH-04 | Phase 3 | Pending |
-| SRCH-05 | Phase 3 | Pending |
-| SRCH-06 | Phase 3 | Pending |
-| SPAC-01 | Phase 3 | Pending |
-| SPAC-02 | Phase 3 | Pending |
-| SPAC-03 | Phase 3 | Pending |
-| SPAC-04 | Phase 3 | Pending |
-| SPAC-05 | Phase 3 | Pending |
-| SPAC-06 | Phase 3 | Pending |
-| SPAC-07 | Phase 3 | Pending |
-| INTL-01 | Phase 3 | Pending |
-| INTL-02 | Phase 3 | Pending |
-| INTL-03 | Phase 3 | Pending |
-| INTL-04 | Phase 3 | Pending |
+| FWAT-05 | Phase 5 | Pending |
+| FWAT-06 | Phase 5 | Pending |
+| SRCH-01 | Phase 3 | Complete |
+| SRCH-02 | Phase 3 | Complete |
+| SRCH-03 | Phase 3 | Complete |
+| SRCH-04 | Phase 3 | Complete |
+| SRCH-05 | Phase 3 | Complete |
+| SRCH-06 | Phase 3 | Complete |
+| SPAC-01 | Phase 3 | Complete |
+| SPAC-02 | Phase 3 | Complete |
+| SPAC-03 | Phase 3 | Complete |
+| SPAC-04 | Phase 3 | Complete |
+| SPAC-05 | Phase 3 | Complete |
+| SPAC-06 | Phase 3 | Complete |
+| SPAC-07 | Phase 3 | Complete |
+| INTL-01 | Phase 3 | Complete |
+| INTL-02 | Phase 5 | Pending |
+| INTL-03 | Phase 3 | Complete |
+| INTL-04 | Phase 3 | Complete |
 | PAGE-01 | Phase 4 | Complete |
 | PAGE-02 | Phase 4 | Complete |
 | PAGE-03 | Phase 4 | Complete |
 | PAGE-04 | Phase 4 | Complete |
 | PAGE-05 | Phase 4 | Complete |
-| PAGE-06 | Phase 4 | Complete |
+| PAGE-06 | Phase 5 | Pending |
 | PAGE-07 | Phase 4 | Complete |
-| PAGE-08 | Phase 4 | Complete |
+| PAGE-08 | Phase 5 | Pending |
 | PAGE-09 | Phase 4 | Complete |
-| PAGE-10 | Phase 4 | Complete |
-| PAGE-11 | Phase 4 | Complete |
-| PAGE-12 | Phase 4 | Complete |
+| PAGE-10 | Phase 5 | Pending |
+| PAGE-11 | Phase 5 | Pending |
+| PAGE-12 | Phase 5 | Pending |
 | UX-01 | Phase 4 | Complete |
 | UX-02 | Phase 4 | Complete |
 | UX-03 | Phase 4 | Complete |
-| UX-04 | Phase 4 | Complete |
+| UX-04 | Phase 5 | Pending |
 
 **Coverage:**
 - v1 requirements: 58 total (note: original file said 50, actual count is 58)
