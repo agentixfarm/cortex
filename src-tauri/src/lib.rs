@@ -57,6 +57,14 @@ pub fn run() {
 
             let engine_arc = Arc::new(Mutex::new(engine));
 
+            // Rebuild path index from persisted vectors so already-indexed files are skipped
+            {
+                let engine_guard = engine_arc.blocking_lock();
+                if let Err(e) = indexer.rebuild_path_index(&engine_guard) {
+                    eprintln!("Warning: failed to rebuild path index: {}", e);
+                }
+            }
+
             // Create SpaceManager for Smart Spaces
             let space_manager = Arc::new(std::sync::Mutex::new(SpaceManager::new()));
 
