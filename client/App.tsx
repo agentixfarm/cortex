@@ -32,6 +32,8 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
+            {/* Onboarding renders fullscreen without AppShell layout (BREAK 6 fix) */}
+            <Route path="/onboarding" element={<OnboardingPage />} />
             <Route element={<AppShell />}>
               <Route path="/" element={<Index />} />
               <Route path="/spaces" element={<SpacesPage />} />
@@ -44,7 +46,6 @@ const App = () => (
               <Route path="/insights" element={<InsightsPage />} />
               <Route path="/settings" element={<SettingsPage />} />
               <Route path="/document/:id" element={<DocumentPage />} />
-              <Route path="/onboarding" element={<OnboardingPage />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             </Route>
             <Route path="*" element={<NotFound />} />
