@@ -41,8 +41,8 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **FWAT-02**: Polling fallback for event-dropped scenarios (notify-rs limitation)
 - [x] **FWAT-03**: File type toggles per watched folder
 - [x] **FWAT-04**: Exclusion patterns (node_modules, .git, hidden files)
-- [ ] **FWAT-05**: Background indexing as Tokio task with progress events emitted to frontend
-- [ ] **FWAT-06**: Re-index on document modification (content hash comparison)
+- [x] **FWAT-05**: Background indexing as Tokio task with progress events emitted to frontend
+- [x] **FWAT-06**: Re-index on document modification (content hash comparison)
 
 ### Search
 
@@ -66,7 +66,7 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Intelligence
 
 - [x] **INTL-01**: SONA self-learning: search queries generate learning signals
-- [ ] **INTL-02**: Click-through data tunes search ranking over time
+- [x] **INTL-02**: Click-through data tunes search ranking over time
 - [x] **INTL-03**: Graph edges connect documents by content similarity, shared space, shared tags, shared entities
 - [x] **INTL-04**: Space network graph data from ruvector-graph for visualization
 
@@ -77,12 +77,12 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **PAGE-03**: Space detail (sub-spaces, document list, related spaces)
 - [x] **PAGE-04**: Search page (split-pane: results + preview panel, filters)
 - [x] **PAGE-05**: Recent documents timeline (Today/Yesterday/This Week)
-- [ ] **PAGE-06**: Favorites page (starred documents with sort)
+- [x] **PAGE-06**: Favorites page (starred documents with sort)
 - [x] **PAGE-07**: Tag cloud page (auto-generated + user-created tags)
-- [ ] **PAGE-08**: Watched folders management (add/remove/pause, file type toggles, exclusions)
+- [x] **PAGE-08**: Watched folders management (add/remove/pause, file type toggles, exclusions)
 - [x] **PAGE-09**: Insights/analytics (donut chart, area chart, bar chart, space network graph)
-- [ ] **PAGE-10**: Settings: General, Indexing, AI & Models, Privacy, Storage, About
-- [ ] **PAGE-11**: Document detail: preview (65%) + metadata sidebar (35%)
+- [x] **PAGE-10**: Settings: General, Indexing, AI & Models, Privacy, Storage, About
+- [x] **PAGE-11**: Document detail: preview (65%) + metadata sidebar (35%)
 - [ ] **PAGE-12**: Onboarding wizard (Welcome, Select Folders, Scanning, Spaces Ready)
 
 ### UX
@@ -155,8 +155,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | FWAT-02 | Phase 2 | Complete |
 | FWAT-03 | Phase 2 | Complete |
 | FWAT-04 | Phase 2 | Complete |
-| FWAT-05 | Phase 5 | Pending |
-| FWAT-06 | Phase 5 | Pending |
+| FWAT-05 | Phase 5 | Complete |
+| FWAT-06 | Phase 5 | Complete |
 | SRCH-01 | Phase 3 | Complete |
 | SRCH-02 | Phase 3 | Complete |
 | SRCH-03 | Phase 3 | Complete |
@@ -171,7 +171,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | SPAC-06 | Phase 3 | Complete |
 | SPAC-07 | Phase 3 | Complete |
 | INTL-01 | Phase 3 | Complete |
-| INTL-02 | Phase 5 | Pending |
+| INTL-02 | Phase 5 | Complete |
 | INTL-03 | Phase 3 | Complete |
 | INTL-04 | Phase 3 | Complete |
 | PAGE-01 | Phase 4 | Complete |
@@ -179,12 +179,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 | PAGE-03 | Phase 4 | Complete |
 | PAGE-04 | Phase 4 | Complete |
 | PAGE-05 | Phase 4 | Complete |
-| PAGE-06 | Phase 5 | Pending |
+| PAGE-06 | Phase 5 | Complete |
 | PAGE-07 | Phase 4 | Complete |
-| PAGE-08 | Phase 5 | Pending |
+| PAGE-08 | Phase 5 | Complete |
 | PAGE-09 | Phase 4 | Complete |
-| PAGE-10 | Phase 5 | Pending |
-| PAGE-11 | Phase 5 | Pending |
+| PAGE-10 | Phase 5 | Complete |
+| PAGE-11 | Phase 5 | Complete |
 | PAGE-12 | Phase 5 | Pending |
 | UX-01 | Phase 4 | Complete |
 | UX-02 | Phase 4 | Complete |
