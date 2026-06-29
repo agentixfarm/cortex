@@ -17,6 +17,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 3: Search Intelligence and Smart Spaces** - Semantic search, GNN clustering, graph edges, SONA self-learning, attention re-ranking (completed 2026-02-28)
 - [x] **Phase 4: Frontend Integration and UX** - All 12 pages wired to live backend, command palette, onboarding, system tray, keyboard shortcuts (completed 2026-02-28)
 - [x] **Phase 5: Integration Fixes and Gap Closure** - Fix 6 integration breaks: IPC arg mismatches, event wiring, settings persistence, onboarding layout, path_index rebuild (completed 2026-03-13)
+- [ ] **Phase 6: Knowledge Graph and Native Integrations** - Promote entities to first-class graph nodes, add native folder picker, in-app file preview (PDF/image/text), and Open in OS
 
 ## Phase Details
 
@@ -30,7 +31,13 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. CPU-bound operations use spawn_blocking — dev tools confirm no Tokio runtime blocking during heavy calls
   4. RuVector core is initialized with multi-collection support and metadata filtering ready to receive documents
   5. Frontend hooks operate in mock-data mode by default, switch to Tauri invoke when runtime is present
-**Plans**: TBD
+**Plans**: 6 plans
+  - Plan 01 (Wave 1): Backend deps, Tauri plugin wiring, capabilities + CSP + asset protocol, ONNX model bundle, frontend deps install (KG-01, KG-05, UX-05, UX-06, PAGE-13 — foundational)
+  - Plan 02 (Wave 2): NerService (ort + bert-base-NER) + entities.rs extension (email type fix, dedup-by-pair, NER merge) + types.rs + indexer hook + AppState/lib.rs wiring (KG-01, KG-02)
+  - Plan 03 (Wave 3): EntityStore (alias merge, split, related, rename) + 6 entity IPC commands + read_document_text + Tokio backfill task with throttled progress events + Wave 0 fixtures (KG-01..KG-05, PAGE-13)
+  - Plan 04 (Wave 2): Frontend types mirror + native folder picker on WatchedPage + DocumentContextMenu + DocumentRow extraction + context-menu wiring on search/recent/favorites/spaces-detail (UX-05, UX-06)
+  - Plan 05 (Wave 3): 7 file preview components (FilePreview/PdfPreview/ImagePreview/TextPreview/MarkdownPreview/SizeGuardCard/UnsupportedPreview) + usePreview hook + DocumentPage header buttons + entity-chip-as-Link (PAGE-13, UX-06)
+  - Plan 06 (Wave 4): Entity UI (9 components) + EntitiesPage + EntityDetailPage + 7 React Query hooks + BackfillIndicator + useBackfillProgress + Sidebar Entities link + REQUIREMENTS.md update + end-to-end UX checkpoint (KG-01, KG-03, KG-04, KG-05)
 
 ### Phase 2: Document Pipeline and File Watching
 **Goal**: Documents in watched folders are automatically discovered, parsed, embedded, and indexed — the complete data flow from file on disk to searchable vector in RuVector.
@@ -91,10 +98,29 @@ Decimal phases appear between their surrounding integers in numeric order.
   - Plan 01: Rust backend fixes — IPC param names, IndexProgress serde camelCase, path_index rebuild
   - Plan 02: Frontend + settings wiring — event listener, settings persistence, onboarding route, WatchedPage fixes
 
+### Phase 6: Knowledge Graph and Native Integrations
+**Goal**: Cortex moves from "doc auto-organizer" to "knowledge-graph-backed personal brain" — entities (Property, Person, Organization, Amount, Date) become first-class graph nodes that users can click to see every related document, the native folder picker replaces the manual path text input, and any indexed file can be previewed in-app or opened in the OS default application.
+**Depends on**: Phase 5
+**Requirements**: KG-01, KG-02, KG-03, KG-04, KG-05, UX-05, PAGE-13, UX-06
+**Success Criteria** (what must be TRUE):
+  1. Entities extracted from documents appear as graph nodes; clicking an entity surfaces every document mentioning it
+  2. Entity normalization merges aliases (e.g., "123 Main St" and "Main Street property") so duplicates collapse
+  3. Add Watched Folder opens a native OS folder picker; manual path typing is gone
+  4. Document detail page renders an in-app preview for PDF, image, plain-text, and markdown files (not just a 200-char excerpt)
+  5. Open in Finder / Open with default app works from Document detail and search results
+  6. Knowledge graph is queryable via IPC — frontend can request "entities by type", "documents for entity", "related entities"
+**Plans**: 6 plans
+  - Plan 01 (Wave 1): Backend deps, Tauri plugin wiring, capabilities + CSP + asset protocol, ONNX model bundle, frontend deps install (KG-01, KG-05, UX-05, UX-06, PAGE-13 — foundational)
+  - Plan 02 (Wave 2): NerService (ort + bert-base-NER) + entities.rs extension (email type fix, dedup-by-pair, NER merge) + types.rs + indexer hook + AppState/lib.rs wiring (KG-01, KG-02)
+  - Plan 03 (Wave 3): EntityStore (alias merge, split, related, rename) + 6 entity IPC commands + read_document_text + Tokio backfill task with throttled progress events + Wave 0 fixtures (KG-01..KG-05, PAGE-13)
+  - Plan 04 (Wave 2): Frontend types mirror + native folder picker on WatchedPage + DocumentContextMenu + DocumentRow extraction + context-menu wiring on search/recent/favorites/spaces-detail (UX-05, UX-06)
+  - Plan 05 (Wave 3): 7 file preview components (FilePreview/PdfPreview/ImagePreview/TextPreview/MarkdownPreview/SizeGuardCard/UnsupportedPreview) + usePreview hook + DocumentPage header buttons + entity-chip-as-Link (PAGE-13, UX-06)
+  - Plan 06 (Wave 4): Entity UI (9 components) + EntitiesPage + EntityDetailPage + 7 React Query hooks + BackfillIndicator + useBackfillProgress + Sidebar Entities link + REQUIREMENTS.md update + end-to-end UX checkpoint (KG-01, KG-03, KG-04, KG-05)
+
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → 3 → 4
+Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
@@ -103,3 +129,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 | 3. Search Intelligence and Smart Spaces | 5/5 | Complete    | 2026-02-28 |
 | 4. Frontend Integration and UX | 6/6 | Complete | 2026-02-28 |
 | 5. Integration Fixes and Gap Closure | 2/2 | Complete   | 2026-03-13 |
+| 6. Knowledge Graph and Native Integrations | 0/6 | Planned   | — |
