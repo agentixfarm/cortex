@@ -109,13 +109,14 @@ Decimal phases appear between their surrounding integers in numeric order.
   4. Document detail page renders an in-app preview for PDF, image, plain-text, and markdown files (not just a 200-char excerpt)
   5. Open in Finder / Open with default app works from Document detail and search results
   6. Knowledge graph is queryable via IPC — frontend can request "entities by type", "documents for entity", "related entities"
-**Plans**: 6 plans
-  - Plan 01 (Wave 1): Backend deps, Tauri plugin wiring, capabilities + CSP + asset protocol, ONNX model bundle, frontend deps install (KG-01, KG-05, UX-05, UX-06, PAGE-13 — foundational)
+**Plans**: 7 plans
+  - Plan 01 (Wave 1): Backend deps, Tauri plugin wiring (dialog/opener/fs), capabilities + CSP + asset protocol, ONNX model bundle, frontend deps install (KG-01, KG-05, UX-05, UX-06, PAGE-13 — foundational)
   - Plan 02 (Wave 2): NerService (ort + bert-base-NER) + entities.rs extension (email type fix, dedup-by-pair, NER merge) + types.rs + indexer hook + AppState/lib.rs wiring (KG-01, KG-02)
-  - Plan 03 (Wave 3): EntityStore (alias merge, split, related, rename) + 6 entity IPC commands + read_document_text + Tokio backfill task with throttled progress events + Wave 0 fixtures (KG-01..KG-05, PAGE-13)
-  - Plan 04 (Wave 2): Frontend types mirror + native folder picker on WatchedPage + DocumentContextMenu + DocumentRow extraction + context-menu wiring on search/recent/favorites/spaces-detail (UX-05, UX-06)
+  - Plan 03 (Wave 3): EntityStore (alias merge, split, related, rename) + 6 entity IPC commands + read_document_text + Tokio backfill task with throttled progress events + Wave 0 fixtures + F1-floor test (KG-01..KG-05, PAGE-13)
+  - Plan 04 (Wave 2): Frontend types mirror + native folder picker on WatchedPage (with D-19 client-side directory validation) + DocumentContextMenu + DocumentRow extraction + context-menu wiring on search/recent/favorites/spaces-detail (UX-05, UX-06)
   - Plan 05 (Wave 3): 7 file preview components (FilePreview/PdfPreview/ImagePreview/TextPreview/MarkdownPreview/SizeGuardCard/UnsupportedPreview) + usePreview hook + DocumentPage header buttons + entity-chip-as-Link (PAGE-13, UX-06)
-  - Plan 06 (Wave 4): Entity UI (9 components) + EntitiesPage + EntityDetailPage + 7 React Query hooks + BackfillIndicator + useBackfillProgress + Sidebar Entities link + REQUIREMENTS.md update + end-to-end UX checkpoint (KG-01, KG-03, KG-04, KG-05)
+  - Plan 06 (Wave 4): 5 entity components (EntityChip/EntityTypeBadge/EntityCard/EntityTypeFilterBar/RelatedEntityChip) + EntitiesPage + 5 React Query read hooks + Sidebar Entities link + App.tsx /entities route + DocumentPage chip swap + mock-data (KG-01, KG-03, PAGE-13)
+  - Plan 07 (Wave 5): EntityDetailPage + 4 entity components (EntityDetailHeader/AliasChipList/AliasChip/SplitAliasDialog) + 2 mutation hooks (rename + split) + BackfillIndicator + useBackfillProgress + useBackfillStore + AppShell mount + App.tsx /entities/:id route + REQUIREMENTS.md update + end-to-end UX checkpoint (KG-01, KG-04, KG-05)
 
 ## Progress
 
@@ -129,4 +130,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | 3. Search Intelligence and Smart Spaces | 5/5 | Complete    | 2026-02-28 |
 | 4. Frontend Integration and UX | 6/6 | Complete | 2026-02-28 |
 | 5. Integration Fixes and Gap Closure | 2/2 | Complete   | 2026-03-13 |
-| 6. Knowledge Graph and Native Integrations | 0/6 | Planned   | — |
+| 6. Knowledge Graph and Native Integrations | 0/7 | Planned   | — |
