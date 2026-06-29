@@ -29,3 +29,6 @@ dist-ssr
 # Tauri / Rust build artifacts
 src-tauri/target/
 src-tauri/gen/schemas/
+
+# ONNX/embedding model cache
+src-tauri/.fastembed_cache/
