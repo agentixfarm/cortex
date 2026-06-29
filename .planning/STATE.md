@@ -3,12 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: in-progress
-last_updated: "2026-03-13T00:10:00.000Z"
+stopped_at: Phase 6 context gathered
+last_updated: "2026-06-29T02:51:47.035Z"
+last_activity: "2026-06-25 -- Phase 6 added to ROADMAP covering: entity graph nodes, folder picker, file preview, Open in OS"
 progress:
-  total_phases: 5
+  total_phases: 6
   completed_phases: 5
   total_plans: 23
   completed_plans: 23
+  percent: 83
 ---
 
 # Project State
@@ -18,20 +21,25 @@ progress:
 See: .planning/PROJECT.md (updated 2026-02-27)
 
 **Core value:** Documents sort themselves into meaningful spaces through AI-powered clustering; users find anything with natural language search -- all running locally.
-**Current focus:** Phase 5 -- Integration Fixes and Gap Closure -- Complete
+**Current focus:** Phase 6 -- Knowledge Graph and Native Integrations -- Not planned
 
 ## Current Position
 
-Phase: 5 of 5 (Integration Fixes and Gap Closure) -- Complete
-Plan: 2 of 2 complete (05-01 and 05-02 done)
-Status: All phases complete. All 23 plans executed across 5 phases.
-Last activity: 2026-03-13 -- Plan 05-02 executed: TopBar indexing indicator wired to Tauri events, onboarding route moved outside AppShell
+Phase: 6 of 6 (Knowledge Graph and Native Integrations) -- Not planned
+Plan: 0 of 0 (not yet planned)
+Status: Phases 1-5 complete (23 plans). Phase 6 added 2026-06-25 to extend v1.0 milestone scope before close.
+Last activity: 2026-06-25 -- Phase 6 added to ROADMAP covering: entity graph nodes, folder picker, file preview, Open in OS
 
-Progress: [████████████████████] 100%
+Progress: [████████████████░░░░] 83% (5 of 6 phases)
+
+## Roadmap Evolution
+
+- 2026-06-25: Phase 6 added -- Knowledge Graph and Native Integrations. Extends v1.0 before milestone close. Covers entity-as-node graph (promote regex entities to first-class nodes with click-through), tauri-plugin-dialog folder picker, in-app file preview (PDF/image/text), and Open in OS via tauri-plugin-opener.
 
 ## Performance Metrics
 
 **Velocity:**
+
 - Total plans completed: 16
 - Total execution time: ~2 hours
 
@@ -132,7 +140,7 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-13
-Stopped at: Completed 05-02-PLAN.md. All 5 phases complete. All 23 plans executed.
-Resume file: N/A -- project complete
+Last session: 2026-06-29T02:51:47.031Z
+Stopped at: Phase 6 context gathered
+Resume file: .planning/phases/06-knowledge-graph-and-native-integrations/06-CONTEXT.md
 Resume action: N/A -- all plans executed
